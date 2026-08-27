@@ -17,6 +17,11 @@
 .stop-bound + .stop-en {
   margin-top: 4px;
 }
+.eta-head .stop-en {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
 
 /* Favorite star in the details topbar is 48px tall (min-height from .star-btn)
    vs the 44px back button, stretching and misaligning the header. */
@@ -39,8 +44,8 @@
 /* Direction tabs: glow was clipped by overflow, dest labels had no truncation,
    and the thin scrollbar read as a stray underline. */
 .eta-dir-tabs {
-  padding: 8px 4px 10px;
-  margin: -4px -4px 0;
+  padding: 10px 12px 12px;
+  margin: -6px -8px 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -58,7 +63,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
-  max-width: 8.5em;
+  max-width: 10em;
 }
 
 /* ETA rows: long status strings ("即將到站 · 10:52") inherited the 1.55rem
@@ -74,6 +79,9 @@
   text-align: right;
   min-width: 0;
   max-width: 100%;
+  /* Clock suffixes such as " · 11:02" inherit this; the number/unit keep their own sizes. */
+  font-size: 0.92rem;
+  font-weight: 800;
 }
 .eta-time:not(:has(.eta-mins-num)),
 .eta-mins:not(:has(.eta-mins-num)) {
