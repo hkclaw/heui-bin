@@ -74,6 +74,8 @@
 .eta-route {
   min-width: 0;
 }
+.eta-row .eta-time,
+.eta-row .eta-mins,
 .eta-time,
 .eta-mins {
   text-align: right;
