@@ -1,0 +1,112 @@
+/* Details page (ETA) CSS fixes.
+   Loaded after the production bundle so these rules win on equal specificity. */
+
+/* Header: stop-bound / stop-en are <p> on the details page and inherited
+   browser default paragraph margins, which opened large gaps under the title. */
+.eta-head {
+  min-width: 0;
+}
+.eta-name {
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.stop-bound,
+.stop-en {
+  margin: 0;
+}
+.stop-bound + .stop-en {
+  margin-top: 4px;
+}
+
+/* Favorite star in the details topbar is 48px tall (min-height from .star-btn)
+   vs the 44px back button, stretching and misaligning the header. */
+.star-btn.top {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.eta-body,
+#eta-body {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Direction tabs: glow was clipped by overflow, dest labels had no truncation,
+   and the thin scrollbar read as a stray underline. */
+.eta-dir-tabs {
+  padding: 8px 4px 10px;
+  margin: -4px -4px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.eta-dir-tabs::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+.eta-dir-tab {
+  max-width: min(100%, 16rem);
+  align-items: center;
+  min-width: 0;
+}
+.eta-dir-tab-dest {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 8.5em;
+}
+
+/* ETA rows: long status strings ("即將到站 · 10:52") inherited the 1.55rem
+   minute font and nowrap, collapsing the middle column on narrow screens. */
+.eta-row {
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, auto);
+}
+.eta-route {
+  min-width: 0;
+}
+.eta-time,
+.eta-mins {
+  text-align: right;
+  min-width: 0;
+  max-width: 100%;
+}
+.eta-time:not(:has(.eta-mins-num)),
+.eta-mins:not(:has(.eta-mins-num)) {
+  white-space: normal;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.eta-dest {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* KMB route chips on the details page: hide the thin scrollbar that looked
+   like a misplaced active-state underline. */
+.eta-route-bar .route-chips {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-block: 6px;
+  margin-block: -2px;
+}
+.eta-route-bar .route-chips::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+
+.eta-tools {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.eta-tools .muted {
+  min-width: 0;
+}
