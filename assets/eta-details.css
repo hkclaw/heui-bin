@@ -113,6 +113,124 @@
   height: 0;
 }
 
+/* KMB details: route chips first, then a scannable next-arrival list */
+.eta-route-bar {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+.eta-route-bar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.eta-route-hint {
+  margin: 0;
+  flex: 1 1 8em;
+  min-width: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #8b93a7;
+}
+.eta-route-all {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid rgba(25, 230, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(25, 230, 255, 0.12);
+  color: #19e6ff;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.eta-route-bar .route-chips {
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 6px;
+  padding-block: 0;
+  margin-block: 0;
+}
+.eta-route-bar .route-chip {
+  min-height: 36px;
+  padding: 0 12px;
+}
+.eta-route-bar .route-chips.is-dense {
+  max-height: 84px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.eta-route-q {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f2f6f8;
+  font: inherit;
+  font-size: 0.92rem;
+}
+.eta-route-q::placeholder {
+  color: #8b93a7;
+}
+.eta-route-none {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.eta-next {
+  min-width: 0;
+}
+.eta-next-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.eta-next-head .section-label {
+  margin: 0;
+}
+.eta-next-soon {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #8b93a7;
+}
+.eta-next .eta-list .eta-row {
+  grid-template-columns: minmax(3.4em, auto) minmax(0, 1fr) minmax(0, auto);
+  padding: 10px 12px;
+}
+.eta-next .eta-list .eta-row:first-child {
+  border-color: rgba(25, 230, 255, 0.4);
+  background: rgba(25, 230, 255, 0.08);
+}
+.eta-next .eta-list .eta-route {
+  color: #f2f6f8;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.eta-next .eta-list .eta-dest {
+  display: block;
+  margin-top: 1px;
+  color: #e6ebf2;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+.eta-next .eta-list .eta-mins .eta-mins-num {
+  font-size: 1.7rem;
+}
+
 .eta-tools {
   min-width: 0;
   flex-wrap: wrap;
