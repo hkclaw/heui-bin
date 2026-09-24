@@ -17,12 +17,76 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <meta name="tap-eta-rev" content="v20260826v" />
+    <meta name="tap-eta-rev" content="v20260827q" />
     <title>去邊</title>
-    <script type="module" crossorigin src="/assets/index-sb3kOOwr.js?v=busux3"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DfAmHTid.css">
-    <link rel="stylesheet" href="/assets/eta-details.css?v=4">
-  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+    <script>
+    (function () {
+      var REV = 'v20260827q';
+      if (!('serviceWorker' in navigator)) return;
+      function showUpdateBanner(worker) {
+        try {
+          if (document.getElementById('sw-update-banner')) return;
+          var b = document.createElement('button');
+          b.id = 'sw-update-banner';
+          b.className = 'sw-update';
+          b.type = 'button';
+          b.setAttribute('aria-label', '有新版本，更新');
+          b.innerHTML = '<span class="sw-dot" aria-hidden="true"></span><span>有新版本 · 更新</span>';
+          b.addEventListener('click', function () {
+            b.disabled = true;
+            b.querySelector('span:last-child').textContent = '更新緊…';
+            worker.addEventListener('statechange', function () {
+              if (worker.state === 'activated') { location.reload(); }
+            });
+            worker.postMessage({ type: 'SKIP_WAITING' });
+          });
+          (document.body || document.documentElement).appendChild(b);
+        } catch (_) {}
+      }
+      function watch(reg) {
+        if (!reg) return;
+        if (reg.waiting && reg.waiting.state === 'installed') {
+          showUpdateBanner(reg.waiting);
+        }
+        if (reg.installing) {
+          reg.installing.addEventListener('statechange', function () {
+            if (this.state === 'installed' && reg.waiting) {
+              showUpdateBanner(reg.waiting);
+            }
+          });
+        }
+        reg.addEventListener('updatefound', function () {
+          var ni = reg.installing;
+          if (!ni) return;
+          ni.addEventListener('statechange', function () {
+            if (this.state === 'installed' && reg.waiting) {
+              showUpdateBanner(reg.waiting);
+            }
+          });
+        });
+      }
+      window.addEventListener('load', function () {
+        var hadController = !!navigator.serviceWorker.controller;
+        navigator.serviceWorker.register('/sw.js?rev=' + REV, { scope: '/' }).then(function (reg) {
+          watch(reg);
+          return reg.update();
+        }).catch(function () {});
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+          // newly-activated SW took control — reload once to drop stale bundle.
+          // Only when there was an existing controller (i.e. a real SW swap).
+          if (!hadController || window.__swReloading) return;
+          window.__swReloading = true;
+          location.reload();
+        });
+      });
+    })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-v20260827q.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-v20260827q.css">
+    <link rel="stylesheet" href="/assets/eta-details.css?v=27q">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="manifest" href="/manifest.webmanifest">
+  </head>
   <body>
     <div id="app"></div>
   </body>
