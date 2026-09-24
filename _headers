@@ -1,0 +1,12 @@
+/
+  Cache-Control: no-store
+/index.html
+  Cache-Control: no-store
+/rev.txt
+  Cache-Control: no-store
+/sw.js
+  Cache-Control: no-store
+/registerSW.js
+  Cache-Control: no-store
+/assets/*
+  Cache-Control: public, max-age=0, must-revalidate

@@ -238,3 +238,16 @@
 .eta-tools .muted {
   min-width: 0;
 }
+
+
+
+.eta-dest .eta-next-stop{color:var(--muted);font-size:.72rem;font-weight:500;letter-spacing:0;margin-inline-start:2px}
+.eta-time,.eta-mins{flex:none}
+
+.chip-mtr{color:#b8c0cc;background:#ffffff0a;border:1px solid #ff2bd659}
+
+#nearby-slot{min-height:320px}
+#nearby-slot .nearby-block{animation:none}
+.nearby-list{min-height:168px}
+.nearby-skel li{min-height:56px;margin-bottom:8px;border:1px solid #00e5ff22;border-radius:var(--radius,12px);background:#ffffff06}
+#kmb-hint:empty{display:none}
