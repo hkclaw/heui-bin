@@ -259,16 +259,52 @@ Use a phone on cellular or a normal Wi-Fi network, not a desktop with `-k`.
 
 ## CI/CD
 
-`.github/workflows/ci.yml` follows the installed `setting-up-ci` skill, adapted to this repo. There is no `package.json`, so the check job runs `scripts/check-snapshot.sh` instead of `npm test`. The deploy job runs only on a push to `main`, after that check passes. It publishes `./` to `tap-eta-hk.surge.sh` and then to `heuibin.codecoffee.online`. The token is `secrets.SURGE_TOKEN`. It is not stored in the workflow.
+`.github/workflows/ci.yml` checks the snapshot, then publishes `./` to `tap-eta-hk.surge.sh` and `heuibin.codecoffee.online`. It does not publish `codecoffee.online`. It does not pass `--force https`, does not change DNS, and does not use a paid Surge plan. `scripts/check-snapshot.sh` fails the job if `rev.txt` is listed in `.surgeignore`.
 
-On the machine that is already logged into the Surge account that owns both projects:
+There is no `package.json`. The check job is the test. Deploy runs only when `github.ref` is `refs/heads/main` and the event is `push` or `workflow_dispatch`.
+
+### Secrets
+
+Add these under GitHub → `hkclaw/heui-bin` → Settings → Secrets and variables → Actions → Repository secrets. Never commit them, and never put them in the workflow file.
+
+| Secret | Required | Value |
+| --- | --- | --- |
+| `SURGE_TOKEN` | Yes | A token from the existing Free account that already owns `tap-eta-hk.surge.sh`, `heuibin.codecoffee.online`, and `codecoffee.online`. |
+| `SURGE_LOGIN` | No | The email of that same existing account. The CLI publishes with the token alone. If this secret is unset, the workflow unsets it and continues. |
+
+Do not create a new Surge account. A POST to `/token` with an email that has no account creates one, and that new account cannot update these hostnames.
+
+Mint `SURGE_TOKEN` from the existing account. Basic auth is the email and password; the response token is what you store:
+
+```sh
+curl -sS -X POST https://surge.surge.sh/token -u 'EXISTING_EMAIL:PASSWORD'
+```
+
+```json
+{"email":"EXISTING_EMAIL","token":"…"}
+```
+
+Copy only the `token` value. The same token is what `surge tokens add` prints when that account is already logged in on the Omen. Leave `--domain` off so the token can publish both app hostnames:
 
 ```sh
 surge tokens add -m ci
-gh secret set SURGE_TOKEN --repo hkclaw/heui-bin
 ```
 
-Paste the token when `gh` asks. Do not commit it. `surge tokens add --domain heuibin.codecoffee.online` would not cover `tap-eta-hk.surge.sh`, so leave `--domain` off for this pipeline. After the secret exists, a push to `main` is the publish. The job fails closed if `SURGE_TOKEN` is empty, because an interactive `surge login` would hang the runner.
+Store it:
+
+```sh
+gh secret set SURGE_TOKEN --repo hkclaw/heui-bin
+gh secret set SURGE_LOGIN --repo hkclaw/heui-bin
+```
+
+`SURGE_TOKEN` is already present: Actions runs [39130264432](https://github.com/hkclaw/heui-bin/actions/runs/39130264432) and [39130399518](https://github.com/hkclaw/heui-bin/actions/runs/39130399518) published both hostnames. Rotate it with the same `curl` or `surge tokens add`, then `gh secret set` again. `surge tokens rem <id>` revokes an old one.
+
+### Trigger a deploy
+
+- Push to `main`. Pull requests run the check only.
+- Or open [CI](https://github.com/hkclaw/heui-bin/actions/workflows/ci.yml), choose Run workflow, and select branch `main`.
+
+The job exits before `surge` if `SURGE_TOKEN` is empty, so the runner does not hang on an interactive login. After publish it curls both `rev.txt` URLs and requires them to match the repo’s `rev.txt`.
 
 ## Republish a new rev
 
