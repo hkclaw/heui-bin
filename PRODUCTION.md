@@ -1,6 +1,8 @@
 # 去邊 production setup
 
-Checked 2026-10-18 against this repository and the live hosts. This file is the runbook. HTTPS on the custom hostname is not done. This environment cannot publish: there is no Surge CLI, no `~/.surge` login, and no `SURGE_*` variable (`NEED_SURGE_AUTH`, same state as `SHIPPED.md`).
+Checked 2026-10-18 against this repository and the live hosts. This file is the runbook.
+
+As of 2026-10-18 13:01 UTC, `https://heuibin.codecoffee.online/rev.txt` and `https://tap-eta-hk.surge.sh/rev.txt` both return `v20260827q`. The custom-hostname certificate is `CN=heuibin.codecoffee.online`, notAfter 16 January 2027. Plain `http://heuibin.codecoffee.online/rev.txt` still returns 200, so `--force https` has not been applied. Pushes to `main` publish through `.github/workflows/ci.yml` after the `SURGE_TOKEN` repository secret exists.
 
 Brand spelling is `heuibin`. The share name is 去邊.
 
@@ -255,6 +257,19 @@ Use a phone on cellular or a normal Wi-Fi network, not a desktop with `-k`.
 6. Deny location once and confirm the rest of the app still opens. Then allow location and confirm a nearby result can appear.
 7. After a later rev is published, open the installed app, let the page load, and look for the button「有新版本 · 更新」. Tap it. The page reloads once into the new bundle. The first install on a phone does not show that button.
 
+## CI/CD
+
+`.github/workflows/ci.yml` follows the installed `setting-up-ci` skill, adapted to this repo. There is no `package.json`, so the check job runs `scripts/check-snapshot.sh` instead of `npm test`. The deploy job runs only on a push to `main`, after that check passes. It publishes `./` to `tap-eta-hk.surge.sh` and then to `heuibin.codecoffee.online`. The token is `secrets.SURGE_TOKEN`. It is not stored in the workflow.
+
+On the machine that is already logged into the Surge account that owns both projects:
+
+```sh
+surge tokens add -m ci
+gh secret set SURGE_TOKEN --repo hkclaw/heui-bin
+```
+
+Paste the token when `gh` asks. Do not commit it. `surge tokens add --domain heuibin.codecoffee.online` would not cover `tap-eta-hk.surge.sh`, so leave `--domain` off for this pipeline. After the secret exists, a push to `main` is the publish. The job fails closed if `SURGE_TOKEN` is empty, because an interactive `surge login` would hang the runner.
+
 ## Republish a new rev
 
 Do this for every snapshot after `q`.
@@ -324,4 +339,5 @@ Invariant to enforce after every publish:
 | Date | Decision |
 | --- | --- |
 | 2026-09-24 | `PROGRESS.md` said Surge free, no Professional, HTTPS via a Cloudflare proxy. `v20260827q` was committed and not published. |
-| 2026-10-18 | Re-checked the hosts, the certificate, the zone, and Surge’s platform docs. Hosting stays on Surge free. The certificate comes from Surge’s managed cert, not from Cloudflare and not from a paid PEM upload. `q` is still unpublished. HTTPS is still unfixed until the steps above are run on an account that can log in. |
+| 2026-10-18 | Re-checked the hosts, the certificate, the zone, and Surge’s platform docs. Hosting stays on Surge free. The certificate comes from Surge’s managed cert, not from Cloudflare and not from a paid PEM upload. |
+| 2026-10-18 13:01 UTC | Both app hostnames serve `v20260827q` over HTTPS. Certificate SAN is `DNS:heuibin.codecoffee.online`. HTTP is still 200. GitHub Actions publishes `main` once `SURGE_TOKEN` is set. |

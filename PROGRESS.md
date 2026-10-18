@@ -2,7 +2,9 @@
 
 更新：2026-10-18
 
-**2026-10-18 取代：** 下面 2026-09-24「HTTPS 用 Cloudflare proxy、唔買 Surge Pro」不再執行。Surge 免費計劃已包括自定義域名同自動 managed certificate。生產環境係 Surge 免費靜態托管；鎖頭做在 `heuibin.codecoffee.online`，唔使買 VM、Node host、Surge Professional 或 Cloudflare。完整步驟同驗證見 [PRODUCTION.md](PRODUCTION.md)。本地 `v20260827q` 仍未發布（NEED_SURGE_AUTH）。HTTPS 尚未完成。
+**2026-10-18 取代：** 下面 2026-09-24「HTTPS 用 Cloudflare proxy、唔買 Surge Pro」不再執行。Surge 免費計劃已包括自定義域名同自動 managed certificate。生產環境係 Surge 免費靜態托管。
+
+**2026-10-18 13:01 UTC：** `https://heuibin.codecoffee.online/` 同 `https://tap-eta-hk.surge.sh/` 都係 `v20260827q`，證個名係 `heuibin.codecoffee.online`。HTTP 仍然 200，未做 `--force https`。之後 push `main` 由 `.github/workflows/ci.yml` 發布，要 repo secret `SURGE_TOKEN`。步驟見 [PRODUCTION.md](PRODUCTION.md)。
 
 更新：2026-09-24
 
@@ -13,7 +15,7 @@
 | | |
 |---|---|
 | 試網（HTTPS，主要用這條） | https://tap-eta-hk.surge.sh/ |
-| 自定義域名 | http://heuibin.codecoffee.online （HTTP 已通。HTTPS 未完成：而家個證係 `*.surge.sh`。跟 PRODUCTION.md 用 Surge 免費 managed certificate，唔好加 Cloudflare proxy。） |
+| 自定義域名 | https://heuibin.codecoffee.online/ （2026-10-18 13:01 UTC：HTTPS 200，rev `v20260827q`，證 CN=`heuibin.codecoffee.online`。HTTP 仍未跳去 HTTPS。） |
 | GitHub | https://github.com/hkclaw/heui-bin |
 | Host | Surge 靜態頁（免費 plan；唔買 Pro） |
 
@@ -30,9 +32,10 @@
 
 ## 未完
 
-- [ ] `heuibin.codecoffee.online` 真正 HTTPS（Surge 免費 managed certificate。2026-09-24 寫的 Cloudflare proxy 已作廢）
-- [ ] Surge republish 要 box 上有 token（NEED_SURGE_AUTH）
-- [ ] `.surgeignore` 清走舊 `assets/index-v20260827{c–p}.*` 減少 upload
+- [x] `heuibin.codecoffee.online` 真正 HTTPS（Surge 免費 managed certificate，2026-10-18 已核對 SAN）
+- [x] `v20260827q` 已發布到兩個 app hostname
+- [ ] GitHub Actions 要 repo secret `SURGE_TOKEN` 先會自動再發布
+- [ ] `.surgeignore` 已忽略舊 `assets/index-v20260827{c–p}.*`；檔仍然留喺 git
 
 ## 決定
 

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "setting-up-ci": {
+      "source": "spencerpauly/awesome-cursor-skills",
+      "sourceType": "github",
+      "skillPath": "resources/setting-up-ci/SKILL.md",
+      "computedHash": "71947f4f0c4b28e34a40a8bd4fb63bbe3eb451d482e4ce566a8794c9923fa295"
+    }
+  }
+}
