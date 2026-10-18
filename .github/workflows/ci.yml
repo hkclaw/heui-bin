@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check static snapshot
+        run: bash scripts/check-snapshot.sh
+
+  deploy:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Publish to Surge
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        run: |
+          if [ -z "$SURGE_TOKEN" ]; then
+            echo "Add repository secret SURGE_TOKEN from: surge tokens add -m ci"
+            exit 1
+          fi
+          npx --yes surge ./ tap-eta-hk.surge.sh
+          npx --yes surge ./ heuibin.codecoffee.online
+      - name: Verify live revision
+        run: |
+          rev=$(tr -d '[:space:]' < rev.txt)
+          for url in https://tap-eta-hk.surge.sh/rev.txt https://heuibin.codecoffee.online/rev.txt; do
+            ok=0
+            for _ in 1 2 3 4 5; do
+              body=$(curl -fsS "$url" | tr -d '[:space:]')
+              echo "$url $body"
+              if [ "$body" = "$rev" ]; then
+                ok=1
+                break
+              fi
+              sleep 3
+            done
+            test "$ok" = 1
+          done
