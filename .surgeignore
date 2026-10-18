@@ -3,6 +3,7 @@ SHIPPED.md
 PRODUCTION.md
 PROGRESS.md
 .agents
+.cursor
 .github
 scripts
 skills-lock.json

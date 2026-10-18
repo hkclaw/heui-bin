@@ -1,0 +1,17 @@
+# Read from main. A pull request cannot change how Bugbot reviews that pull request.
+version: 1
+
+triggers:
+  drafts: true
+  frequency: everyPush
+
+review:
+  effort: default
+  incremental: true
+
+prSummary:
+  mode: comment
+  riskScore: true
+
+autofix:
+  mode: disabled

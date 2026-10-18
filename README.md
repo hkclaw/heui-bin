@@ -56,6 +56,14 @@ gh secret set SURGE_TOKEN --repo hkclaw/heui-bin
 
 An empty `SURGE_TOKEN` fails the job.
 
+## Review
+
+Pull requests are reviewed automatically by Cursor Bugbot. The settings live on `main` in [`.cursor/config/bugbot.yaml`](.cursor/config/bugbot.yaml): every push, including draft pull requests, with incremental comments and a summary comment. [`.cursor/BUGBOT.md`](.cursor/BUGBOT.md) tells the review what this PWA must not break. Autofix stays off.
+
+Comment `cursor review` or `bugbot run` on a pull request to run it by hand.
+
+Bugbot reads that file from the base branch, so a pull request cannot change its own review. If a new pull request stays silent, enable `hkclaw/heui-bin` in Cursor → Automations → Bugbot and set the author’s trigger to every push. A personal setting of “only when mentioned” overrides this file for that author’s pull requests.
+
 ### Manual publish
 
 `CNAME` is `tap-eta-hk.surge.sh`. A publish with no hostname follows that file and updates only the `surge.sh` project. Pass each hostname. The CLI rewrites `CNAME` to the hostname you passed, so restore it afterwards.
@@ -117,6 +125,7 @@ ETA responses are cached in the worker for 60 seconds (`NetworkFirst` on `data.e
 | `CNAME` | Default Surge project, `tap-eta-hk.surge.sh` |
 | `.surgeignore` | Paths left out of a publish. `rev.txt` stays off this list |
 | `.github/workflows/ci.yml`, `scripts/check-snapshot.sh` | Check the snapshot, then publish `main` |
+| `.cursor/config/bugbot.yaml`, `.cursor/BUGBOT.md` | Automatic pull request review |
 | `PRODUCTION.md` | Production runbook |
 | `PROGRESS.md` | Status notes |
 | `SHIPPED.md` | What `v20260827q` changed |
