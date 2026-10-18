@@ -8,6 +8,12 @@ It is for a commute you already know: KMB and LWB stops, MTR Light Rail (includi
 
 The site is static. The phone is the runtime: it calls the KMB and MTR open-data APIs itself, and Surge only serves the files. The share spelling is `heuibin`. The product name is 去邊.
 
+## 畫面
+
+| 常用車站 | 附近車站 | 到站時間 |
+| --- | --- | --- |
+| ![常用車站](docs/screenshots/favorites.png) | ![附近車站](docs/screenshots/nearby.png) | ![到站時間](docs/screenshots/station-eta.png) |
+
 ## Live
 
 | | |
@@ -126,6 +132,7 @@ ETA responses are cached in the worker for 60 seconds (`NetworkFirst` on `data.e
 | `.surgeignore` | Paths left out of a publish. `rev.txt` stays off this list |
 | `.github/workflows/ci.yml`, `scripts/check-snapshot.sh` | Check the snapshot, then publish `main` |
 | `.cursor/config/bugbot.yaml`, `.cursor/BUGBOT.md` | Automatic pull request review |
+| `docs/screenshots/` | Product shots used in this README |
 | `PRODUCTION.md` | Production runbook |
 | `PROGRESS.md` | Status notes |
 | `SHIPPED.md` | What `v20260827q` changed |
