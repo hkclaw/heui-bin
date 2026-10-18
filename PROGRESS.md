@@ -34,7 +34,7 @@
 
 - [x] `heuibin.codecoffee.online` 真正 HTTPS（Surge 免費 managed certificate，2026-10-18 已核對 SAN）
 - [x] `v20260827q` 已發布到兩個 app hostname
-- [ ] GitHub Actions 要 repo secret `SURGE_TOKEN` 先會自動再發布
+- [x] GitHub Actions：push `main` 已發布兩個 hostname（run 39130264432）
 - [ ] `.surgeignore` 已忽略舊 `assets/index-v20260827{c–p}.*`；檔仍然留喺 git
 
 ## 決定
