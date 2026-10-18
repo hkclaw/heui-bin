@@ -249,7 +249,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
       <div class="eta-meta">
         ${t?.hideDest?``:`<span class="eta-dest">${U(e.dest)}${e.nextStop&&e.nextStop!==e.dest?`<span class="eta-next-stop"> · 下一站 ${U(e.nextStop)}</span>`:``}</span>`}
         ${t?.hidePlat||!(e.platform&&e.route!==`屯馬線`)?``:`<span class="eta-plat">月台 ${U(e.platform)}</span>`}
-        ${e.remark?`<span class="eta-rmk">${U(e.remark)}</span>`:``}
+        ${e.remark&&e.remark!==e.etaText?`<span class="eta-rmk">${U(e.remark)}</span>`:``}
       </div>
       <div class="eta-time eta-mins">${Ce(e.etaText,U)}</div>
     </li>

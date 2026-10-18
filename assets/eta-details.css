@@ -204,7 +204,7 @@
   color: #8b93a7;
 }
 .eta-next .eta-list .eta-row {
-  grid-template-columns: minmax(3.4em, auto) minmax(0, 1fr) minmax(0, auto);
+  grid-template-columns: minmax(3.4em, max-content) minmax(4.5em, 1fr) minmax(0, max-content);
   padding: 10px 12px;
 }
 .eta-next .eta-list .eta-row:first-child {
@@ -240,6 +240,23 @@
 }
 
 
+
+/* A long status such as "服務只限於星期一至六(公眾假期除外)" is the time
+   cell's max-content. An auto third track grew to that width and left the
+   destination about one character wide, so CJK stacked into a tall column.
+   Keep a readable destination minimum, and cap the status so it wraps. */
+.eta-list .eta-row {
+  grid-template-columns: minmax(3.2em, max-content) minmax(4.5em, 1fr) minmax(0, max-content);
+}
+.eta-list .eta-row > .eta-time,
+.eta-list .eta-row > .eta-mins {
+  max-width: 9em;
+  white-space: normal;
+}
+.eta-list .eta-row > .eta-time:not(:has(.eta-mins-num)),
+.eta-list .eta-row > .eta-mins:not(:has(.eta-mins-num)) {
+  overflow-wrap: anywhere;
+}
 
 .eta-dest .eta-next-stop{color:var(--muted);font-size:.72rem;font-weight:500;letter-spacing:0;margin-inline-start:2px}
 .eta-time,.eta-mins{flex:none}
