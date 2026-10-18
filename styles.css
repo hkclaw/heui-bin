@@ -16,7 +16,7 @@
 .icon-btn[data-action="share-app"]:active{transform:scale(.96)}
 
 /* SW-update banner (Cantonese one-tap reload) */
-.sw-update{position:fixed;left:50%;bottom:calc(72px + var(--safe-bottom));transform:translateX(-50%);z-index:60;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:1px solid #00e5ff8c;border-radius:999px;background:#0e1418e0;color:#e8fcff;font-size:.92rem;font-weight:700;letter-spacing:.02em;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:var(--glow-cyan);animation:.32s ease-out both rise;cursor:pointer}
+.sw-update{position:fixed;left:50%;bottom:calc(72px + var(--safe-bottom));translate:-50% 0;z-index:60;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:1px solid #00e5ff8c;border-radius:999px;background:#0e1418e0;color:#e8fcff;font-size:.92rem;font-weight:700;letter-spacing:.02em;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:var(--glow-cyan);animation:.32s ease-out both rise;cursor:pointer}
 .sw-update[hidden]{display:none}
 .sw-update .sw-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);display:inline-block}
 
