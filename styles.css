@@ -218,3 +218,11 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .topbar .brand{
   text-shadow:none;
 }
+
+.fare{color:#c5d4dc;font-size:.72rem;font-weight:600;letter-spacing:.01em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fare-conc{color:#8fa0a8;font-weight:500}
+.stop-card-main>.fare{line-height:1.2}
+.stop-name .fare{margin-inline-start:6px}
+.list-route-chip .fare{margin-inline-start:4px;font-size:.62rem;color:#d7e4ea}
+.eta-meta>.fare{line-height:1.2}
+.fav-eta-route .fare{margin-inline-start:4px;font-size:.68rem}
