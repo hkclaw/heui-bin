@@ -91,7 +91,7 @@ assert.ok(about.inner.includes('>去邊</h2>'));
 assert.ok(about.inner.includes('heui-bin'));
 assert.ok(about.inner.includes('實時到站時間'));
 assert.ok(about.inner.includes(`>${rev}</dd>`));
-assert.ok(about.inner.includes('靜態 PWA，用九巴同港鐵開放數據。'));
+assert.ok(about.inner.includes('靜態 PWA，用九巴、城巴同港鐵開放數據。'));
 assert.ok(about.inner.includes('href="https://heuibin.codecoffee.online"'));
 assert.ok(about.inner.includes('href="https://tap-eta-hk.surge.sh"'));
 
