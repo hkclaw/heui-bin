@@ -29,6 +29,10 @@ for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('#nearby-slot:has(.nearby-noloc)'));
   assert.ok(sheet.includes('html.show-install-entry .app-shell:has(#nearby-slot) .main{padding-top:60px}'));
   assert.ok(sheet.includes('html.show-install-entry .arrive-install-row{position:absolute;'));
+  assert.ok(sheet.includes('button{-webkit-appearance:none;appearance:none}'));
+  assert.ok(sheet.includes('.nearby-map.nearby-map-placeholder{overflow:visible}'));
+  assert.ok(sheet.includes('.app-shell .eta-tools{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0e1418}'));
+  assert.ok(sheet.includes('.stop-card{animation-fill-mode:none}'));
 }
 
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');

@@ -263,3 +263,18 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .settings-confirm-actions{display:flex;justify-content:flex-end;gap:8px}
 .settings-note{margin:10px 2px 0}
 .chip-gmb{color:#eaffc2;background:#ffffff0a;border:1px solid #d6ff4a99}
+
+/* Loading views mount <button>s in the same paint as a spinning border
+   (定位中…, 載入班次…, 載入中…, 重新整理). iOS keeps the native button
+   appearance for that first composite, so the author border is missing
+   until a later reflow. appearance:none paints the border on frame 0.
+   The locating card's overflow:hidden clipped that border while the
+   spinner transformed, and the ETA bar's backdrop-filter rasterized it
+   the same way the frosted top bar used to. Favorite cards are buttons
+   with a leftover rise transform; drop it when the animation ends so
+   the border is not stuck on a compositor layer. */
+button{-webkit-appearance:none;appearance:none}
+.nearby-map.nearby-map-placeholder{overflow:visible}
+.app-shell .eta-tools{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0e1418}
+.stop-card{animation-fill-mode:none}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
