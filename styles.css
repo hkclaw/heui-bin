@@ -185,3 +185,17 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .chip-ctb{color:#b8c0cc;background:#ffffff0a;border:1px solid #f0c14a99}
 .chip-nlb{color:#b8c0cc;background:#ffffff0a;border:1px solid #3ddc9799}
 .stop-kicker{display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-width:0}.stop-recent{display:inline-flex;align-items:center;flex:none;box-sizing:border-box;height:22px;margin:0;padding:0 8px;border:1px solid #ffffff38;border-radius:999px;background:#ffffff18;color:#f2f6f8;font-size:.68rem;font-weight:700;letter-spacing:.04em;line-height:1}
+
+/* Opt-in alight reminder. Separate from the arrival lead-time chips. */
+.alight-block{margin:16px 0 4px}
+.alight-limit,.alight-hint,.alight-note{line-height:1.45}
+.alight-dirs,.alight-stops,.alight-mins{display:flex;gap:6px;overflow-x:auto;margin-top:8px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.alight-routes{margin-top:8px}
+.alight-stop,.alight-dir,.alight-min{flex:none;min-height:36px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:#ffffff0d;color:var(--ink);font-size:.82rem;font-weight:700;white-space:nowrap}
+.alight-stop.on,.alight-dir.on,.alight-stop[aria-selected="true"],.alight-dir[aria-pressed="true"]{color:#d7f8ff;background:#00e5ff1a;border-color:#19e6ff80}
+.alight-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.alight-cancel,.alight-arm:not([disabled]){color:#ffd6f5;border-color:#ff2bd680}
+.alight-arm[disabled]{opacity:.45}
+.alight-live{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px;padding:8px 10px 8px 14px;border:1px solid #ff2bd680;border-radius:14px;background:#ff2bd614}
+.alight-live .btn{min-height:36px;padding:0 12px}
+.alight-disable{justify-content:flex-start}

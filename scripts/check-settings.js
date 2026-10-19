@@ -70,6 +70,12 @@ const settings = home.html[0];
 assert.strictEqual(settings.opts.title, '設定');
 assert.strictEqual(settings.opts.back, '/');
 assert.ok(settings.inner.includes('到站提醒'));
+const alight = require('../assets/alight-remind.js');
+assert.ok(settings.inner.includes('落車提醒'));
+assert.ok(settings.inner.includes('data-alight-disable'));
+assert.ok(settings.inner.includes('停用落車提醒'));
+assert.ok(settings.inner.includes('aria-pressed="true"'));
+assert.ok(settings.inner.includes(alight.LIMIT_COPY));
 assert.ok(settings.inner.includes('data-nav="/about"'));
 assert.ok(settings.inner.includes('去邊 / heui-bin'));
 for (const n of [3, 5, 8, 10]) {
