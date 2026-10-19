@@ -37,7 +37,7 @@ assert.ok(bundle.includes('ctb:`城巴`'));
 assert.ok(!bundle.includes('label:`城巴`'));
 assert.ok(bundle.includes('https://rt.data.gov.hk/v1/transport/batch/stop-eta/CTB/'));
 assert.ok(bundle.includes('https://rt.data.gov.hk/v2/transport/citybus/eta/CTB/'));
-assert.ok(bundle.includes('t===`kmb`||t===`ctb`||t===`lrt`||t===`tml`||t===`mtr`'));
+assert.ok(bundle.includes('t===`kmb`||t===`ctb`||t===`nlb`||t===`lrt`||t===`tml`||t===`mtr`'));
 assert.ok(bundle.includes('/data/ctb-stops.json'));
 assert.ok(bundle.includes('/data/ctb-routes.json'));
 for (const sheet of [css, shell]) {

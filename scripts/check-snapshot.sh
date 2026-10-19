@@ -32,6 +32,7 @@ node scripts/check-walk.js
 node scripts/check-leave.js
 node scripts/check-settings.js
 node scripts/check-ctb.js
+node scripts/check-nlb.js
 node scripts/check-bus-filter.js
 node scripts/check-nearby-rank.js
 test -f manifest.webmanifest
@@ -40,6 +41,8 @@ test -f data/catalogue.json
 test -f data/kmb-stops.json
 test -f data/ctb-stops.json
 test -f data/ctb-routes.json
+test -f data/nlb-stops.json
+test -f data/nlb-routes.json
 test -f data/lrt-stations.json
 test -f data/mtr-stations.json
 test -f data/tml-stations.json
