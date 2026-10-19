@@ -324,6 +324,43 @@ body:has(.app-shell.has-mode-bar .eta-tools) .sw-update {
 
 .chip-mtr{color:#b8c0cc;background:#ffffff0a;border:1px solid #ff2bd659}
 
+/* Walk estimate sits under the stop name. Minutes hide until a fix exists;
+   the Maps link stays whenever the stop has coordinates. */
+.eta-walk {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 8px 0 0;
+  min-width: 0;
+}
+.eta-walk-mins {
+  margin: 0;
+  color: #f2f6f8;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.eta-walk-map {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid rgba(25, 230, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(25, 230, 255, 0.12);
+  color: #19e6ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.eta-walk-map:active {
+  background: rgba(25, 230, 255, 0.22);
+}
+
 #nearby-slot{min-height:320px}
 #nearby-slot .nearby-block{animation:none}
 .nearby-list{min-height:168px}
