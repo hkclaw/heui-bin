@@ -243,3 +243,6 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .rs-name{font-weight:700;overflow-wrap:anywhere}
 .rs-here{color:#19e6ff;font-size:.75rem;font-weight:800}
 .rs-row.is-unknown{opacity:.55}
+.route-pad-zero .route-pad-spacer{flex:0 0 calc(33.3333% - 2.66667px);max-width:calc(33.3333% - 2.66667px)}
+.route-pad-delete{font-size:1.1rem;-webkit-touch-callout:none;touch-action:manipulation}
+.route-pad-delete:active{background:#ffffff1f}
