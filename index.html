@@ -34,21 +34,25 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <meta name="tap-eta-rev" content="v20261019r" />
+    <meta name="tap-eta-rev" content="v20261019s" />
     <title>去邊</title>
     <script>
     (function () {
-      var REV = 'v20261019r';
-      if (!('serviceWorker' in navigator)) return;
+      var REV = 'v20261019s';
       function showUpdateBanner(worker) {
         try {
           if (document.getElementById('sw-update-banner')) return;
+          // No waiting worker: rev.txt already moved. Same pill, tap reloads
+          // the NetworkOnly shell. A real update still needs skipWaiting.
+          var reloadOnly = !worker;
           // First install passes through `waiting` before it activates itself.
           // That is not an update. Only offer the pill when another worker
           // is already controlling the page and this one is still waiting.
-          if (!worker || worker.state !== 'installed') return;
-          var current = navigator.serviceWorker.controller;
-          if (!current || current === worker) return;
+          if (!reloadOnly) {
+            if (worker.state !== 'installed') return;
+            var current = navigator.serviceWorker.controller;
+            if (!current || current === worker) return;
+          }
           var b = document.createElement('button');
           b.id = 'sw-update-banner';
           b.className = 'sw-update';
@@ -72,14 +76,27 @@
             window.__swReloading = true;
             location.reload();
           }
-          worker.addEventListener('statechange', function () {
-            // This banner is only shown for a real waiting update, so
-            // activation means the refresh finished — reload even if the
-            // label was already restored after a slow start.
-            if (worker.state === 'activated') finish();
-            else if (worker.state === 'redundant' && b.isConnected) b.remove();
-          });
+          if (!reloadOnly) {
+            worker.addEventListener('statechange', function () {
+              // This banner is only shown for a real waiting update, so
+              // activation means the refresh finished — reload even if the
+              // label was already restored after a slow start.
+              if (worker.state === 'activated') finish();
+              else if (worker.state === 'redundant' && b.isConnected) b.remove();
+            });
+          }
           b.addEventListener('click', function () {
+            if (reloadOnly) {
+              if (window.__swReloading) return;
+              b.disabled = true;
+              b.dataset.busy = '1';
+              b.setAttribute('aria-busy', 'true');
+              var span = label();
+              if (span) span.textContent = '更新緊…';
+              window.__swReloading = true;
+              location.reload();
+              return;
+            }
             if (worker.state === 'activated') { finish(); return; }
             if (worker.state === 'redundant') { b.remove(); return; }
             b.disabled = true;
@@ -133,6 +150,74 @@
           });
         });
       }
+      function readPublishedRev() {
+        var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+        var timer = ctrl ? setTimeout(function () { try { ctrl.abort(); } catch (e) {} }, 6000) : 0;
+        return fetch('/rev.txt', { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined }).then(function (res) {
+          if (!res.ok) throw new Error('rev');
+          return res.text();
+        }).then(function (text) {
+          return String(text || '').replace(/\s+/g, '');
+        }).finally(function () { if (timer) clearTimeout(timer); });
+      }
+      function swRegistration() {
+        if (!('serviceWorker' in navigator)) return Promise.resolve(null);
+        return navigator.serviceWorker.getRegistration('/').catch(function () { return null; });
+      }
+      function realWaiting(reg) {
+        if (!reg || !reg.waiting || reg.waiting.state !== 'installed') return null;
+        var current = navigator.serviceWorker.controller;
+        if (!current || current === reg.waiting) return null;
+        return reg.waiting;
+      }
+      function settleUpdate(reg, remote) {
+        var waiting = realWaiting(reg);
+        if (waiting) { showUpdateBanner(waiting); return Promise.resolve('update'); }
+        var installing = reg && reg.installing;
+        if (!installing) {
+          if (remote && remote !== REV) { showUpdateBanner(null); return Promise.resolve('update'); }
+          return Promise.resolve(remote === REV ? 'current' : 'offline');
+        }
+        return new Promise(function (resolve) {
+          var done = false;
+          function finish(value) { if (done) return; done = true; resolve(value); }
+          function consider() {
+            var next = realWaiting(reg);
+            if (next) { showUpdateBanner(next); finish('update'); return; }
+            if (installing.state === 'redundant' || installing.state === 'activated') {
+              if (remote && remote !== REV) { showUpdateBanner(null); finish('update'); }
+              else finish(remote === REV ? 'current' : 'offline');
+            }
+          }
+          installing.addEventListener('statechange', consider);
+          setTimeout(function () {
+            var next = realWaiting(reg);
+            if (next) { showUpdateBanner(next); finish('update'); return; }
+            if (remote && remote !== REV) { showUpdateBanner(null); finish('update'); return; }
+            finish(remote === REV ? 'current' : 'offline');
+          }, 4000);
+        });
+      }
+      function heuiCheckUpdate() {
+        return Promise.all([
+          swRegistration(),
+          readPublishedRev().catch(function () { return ''; })
+        ]).then(function (pair) {
+          var reg = pair[0];
+          var remote = pair[1];
+          var waiting = realWaiting(reg);
+          if (waiting) { showUpdateBanner(waiting); return 'update'; }
+          var updating = reg && typeof reg.update === 'function'
+            ? reg.update().catch(function () { return null; })
+            : Promise.resolve(null);
+          return Promise.race([
+            updating,
+            new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 6000); })
+          ]).then(function () { return settleUpdate(reg, remote); });
+        });
+      }
+      window.heuiCheckUpdate = heuiCheckUpdate;
+      if (!('serviceWorker' in navigator)) return;
       window.addEventListener('load', function () {
         var hadController = !!navigator.serviceWorker.controller;
         navigator.serviceWorker.register('/sw.js?rev=' + REV, { scope: '/' }).then(function (reg) {
@@ -149,10 +234,10 @@
       });
     })();
     </script>
-    <script type="module" crossorigin src="/assets/index-v20261019r.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-v20261019r.css">
-    <link rel="stylesheet" href="/assets/eta-details.css?v=v20261019r">
-    <link rel="stylesheet" href="/styles.css?v=v20261019r">
+    <script type="module" crossorigin src="/assets/index-v20261019s.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-v20261019s.css">
+    <link rel="stylesheet" href="/assets/eta-details.css?v=v20261019s">
+    <link rel="stylesheet" href="/styles.css?v=v20261019s">
     <link rel="manifest" href="/manifest.webmanifest">
   </head>
   <body>

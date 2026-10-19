@@ -204,7 +204,12 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .alight-arm[disabled]{opacity:.45}
 .alight-live{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px;padding:8px 10px 8px 14px;border:1px solid #ff2bd680;border-radius:14px;background:#ff2bd614}
 .alight-live .btn{min-height:36px;padding:0 12px}
-.alight-disable{justify-content:flex-start}
+/* iOS Safari ignores flex on <button>, so .btn's align-items:center never
+   ran. min-height:44px and padding:0 left the label on the top edge.
+   Equal padding centers it; appearance:none drops the native inset. */
+.btn.settings-pill{-webkit-appearance:none;appearance:none;display:block;width:100%;box-sizing:border-box;height:auto;min-height:44px;padding:12px 18px;line-height:1.25;text-align:left}
+.hint+.btn.settings-pill{margin-top:12px}
+.update-check-note[hidden]{display:none}
 
 /* Home header stays sticky under the status bar. The frosted blur was
    rasterizing 「去邊」, the gear, and 「搜尋」 on Retina Safari, and the
