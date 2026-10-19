@@ -246,3 +246,14 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .route-pad-zero .route-pad-spacer{flex:0 0 calc(33.3333% - 2.66667px);max-width:calc(33.3333% - 2.66667px)}
 .route-pad-delete{font-size:1.1rem;-webkit-touch-callout:none;touch-action:manipulation}
 .route-pad-delete:active{background:#ffffff1f}
+.settings-manage{display:grid;gap:10px}
+.settings-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(#ffffff0f,#ffffff08)}
+.settings-item .stop-card-main{min-width:0}
+.settings-item .stop-en{white-space:normal}
+.settings-item .btn{flex:none}
+.settings-act-danger{color:var(--danger);border-color:#ff7b9a73;background:#ff2bd61a;font-weight:800}
+.settings-confirm{margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:#ffffff0a}
+.settings-confirm-danger{border-color:#ff7b9a80;background:#ff2bd614}
+.settings-confirm-copy{margin:0 0 10px;font-weight:700;line-height:1.45}
+.settings-confirm-actions{display:flex;justify-content:flex-end;gap:8px}
+.settings-note{margin:10px 2px 0}

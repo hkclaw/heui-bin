@@ -21,6 +21,9 @@ assert.ok(!bundle.includes('function armPaint(){let e=P&&P.querySelector(`[data-
 for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('.btn.top-settings'));
   assert.ok(sheet.includes('.about-facts'));
+  assert.ok(sheet.includes('.settings-manage'));
+  assert.ok(sheet.includes('.settings-confirm-danger'));
+  assert.ok(sheet.includes('.settings-act-danger'));
   assert.match(sheet, /\.topbar\{[^}]*-webkit-backdrop-filter:\s*none;[^}]*backdrop-filter:\s*none;[^}]*background:\s*#0e1418/);
   assert.match(sheet, /\.topbar \.brand\{[^}]*text-shadow:\s*none/);
 }
@@ -29,6 +32,11 @@ assert.ok(shell.includes('position:sticky;top:0'));
 assert.ok(shell.includes('.topbar-row>.brand-wrap'));
 assert.ok(shell.includes('left:50%'));
 assert.ok(shell.includes('transform:translate(-50%,-50%)'));
+assert.ok(bundle.includes('data-settings-act'));
+assert.ok(bundle.includes('settingsAct(settingsHit.dataset.settingsAct)'));
+assert.ok(bundle.includes("localStorage.removeItem('tap-eta-recent-search-v1')"));
+assert.ok(bundle.includes("localStorage.removeItem('tap-eta-favorites-v1')"));
+assert.ok(bundle.includes("localStorage.removeItem('tap-eta-pinned-routes-v1')"));
 
 const start = bundle.indexOf('/* SETTINGS_BEGIN */');
 const end = bundle.indexOf('/* SETTINGS_END */');
@@ -41,7 +49,7 @@ function render(lead) {
   const api = new Function(
     'qt', 'At', 'Be', 'armClear', 'armLead', 'Tt', 'U', 'document', 'P',
     `${body}
-     return { settingsBtn, appRev, renderSettings, renderAbout };`
+     return { settingsBtn, appRev, renderSettings, renderAbout, settingsAct, clearRecentSearches, resetFavorites };`
   );
   const state = { cleared: 0 };
   const calls = () => { state.cleared += 1; };
@@ -82,6 +90,14 @@ assert.ok(settings.inner.includes('aria-pressed="true"'));
 assert.ok(settings.inner.includes(alight.LIMIT_COPY));
 assert.ok(settings.inner.includes('data-nav="/about"'));
 assert.ok(settings.inner.includes('去邊 / heui-bin'));
+assert.ok(settings.inner.includes('版本、網址同資料來源。'));
+assert.ok(settings.inner.includes('清除最近搜尋'));
+assert.ok(settings.inner.includes('重設常用車站'));
+assert.ok(settings.inner.includes('搜尋頁嘅最近紀錄 · 未有'));
+assert.ok(settings.inner.includes('收藏同釘選路線 · 未有'));
+assert.ok(settings.inner.includes('data-settings-act="ask-recent"'));
+assert.ok(settings.inner.includes('data-settings-act="ask-favorites"'));
+assert.ok(!settings.inner.includes('settings-confirm'));
 for (const n of [3, 5, 8, 10]) {
   assert.ok(settings.inner.includes(`data-arm-lead="${n}"`));
 }
@@ -104,5 +120,70 @@ assert.ok(about.inner.includes(`>${rev}</dd>`));
 assert.ok(about.inner.includes('靜態 PWA，用九巴、城巴、新大嶼山同港鐵開放數據。'));
 assert.ok(about.inner.includes('href="https://heuibin.codecoffee.online"'));
 assert.ok(about.inner.includes('href="https://tap-eta-hk.surge.sh"'));
+
+function memoryStorage(seed) {
+  const data = { ...seed };
+  return {
+    getItem(key) { return Object.prototype.hasOwnProperty.call(data, key) ? data[key] : null; },
+    removeItem(key) { delete data[key]; },
+  };
+}
+
+const store = memoryStorage({
+  'tap-eta-recent-search-v1': JSON.stringify(['旺角', '荃灣']),
+  'tap-eta-favorites-v1': JSON.stringify([{ id: '1', type: 'kmb', name_tc: '旺角' }]),
+  'tap-eta-pinned-routes-v1': JSON.stringify([{ id: '1', type: 'kmb', route: '1', name_tc: '旺角' }]),
+  'tap-eta-mode-filter-v1': 'kmb',
+  'tap-eta-lead-min-v1': '8',
+  'tap-eta-alight-off-v1': '0',
+});
+global.localStorage = store;
+const seeded = render(5);
+seeded.fns.renderSettings();
+assert.ok(seeded.html.at(-1).inner.includes('搜尋頁嘅最近紀錄 · 2 項'));
+assert.ok(seeded.html.at(-1).inner.includes('收藏同釘選路線 · 1 個車站、1 條釘選'));
+assert.ok(seeded.html.at(-1).inner.includes('停用落車提醒'));
+
+seeded.fns.settingsAct('ask-recent');
+assert.ok(seeded.html.at(-1).inner.includes('清除最近搜尋？'));
+assert.ok(seeded.html.at(-1).inner.includes('data-settings-act="do-recent"'));
+assert.ok(!seeded.html.at(-1).inner.includes('settings-confirm-danger'));
+assert.strictEqual(store.getItem('tap-eta-recent-search-v1'), JSON.stringify(['旺角', '荃灣']));
+
+seeded.fns.settingsAct('cancel');
+assert.ok(!seeded.html.at(-1).inner.includes('清除最近搜尋？'));
+assert.strictEqual(store.getItem('tap-eta-recent-search-v1'), JSON.stringify(['旺角', '荃灣']));
+
+seeded.fns.settingsAct('do-recent');
+assert.strictEqual(store.getItem('tap-eta-recent-search-v1'), null);
+assert.ok(seeded.html.at(-1).inner.includes('已清除最近搜尋'));
+assert.ok(seeded.html.at(-1).inner.includes('搜尋頁嘅最近紀錄 · 未有'));
+assert.notStrictEqual(store.getItem('tap-eta-favorites-v1'), null);
+assert.strictEqual(store.getItem('tap-eta-mode-filter-v1'), 'kmb');
+assert.strictEqual(store.getItem('tap-eta-lead-min-v1'), '8');
+assert.strictEqual(store.getItem('tap-eta-alight-off-v1'), '0');
+
+seeded.fns.settingsAct('ask-recent');
+assert.ok(seeded.html.at(-1).inner.includes('沒有最近搜尋'));
+assert.ok(!seeded.html.at(-1).inner.includes('class="settings-confirm"'));
+
+seeded.fns.settingsAct('ask-favorites');
+assert.ok(seeded.html.at(-1).inner.includes('settings-confirm-danger'));
+assert.ok(seeded.html.at(-1).inner.includes('清除全部常用車站同釘選路線？唔可以還原。'));
+assert.ok(seeded.html.at(-1).inner.includes('data-settings-act="do-favorites"'));
+assert.notStrictEqual(store.getItem('tap-eta-favorites-v1'), null);
+
+seeded.fns.settingsAct('do-favorites');
+assert.strictEqual(store.getItem('tap-eta-favorites-v1'), null);
+assert.strictEqual(store.getItem('tap-eta-pinned-routes-v1'), null);
+assert.strictEqual(store.getItem('tap-eta-mode-filter-v1'), 'kmb');
+assert.strictEqual(store.getItem('tap-eta-lead-min-v1'), '8');
+assert.strictEqual(store.getItem('tap-eta-alight-off-v1'), '0');
+assert.ok(seeded.html.at(-1).inner.includes('已重設常用車站'));
+assert.ok(seeded.html.at(-1).inner.includes('收藏同釘選路線 · 未有'));
+
+seeded.fns.renderSettings();
+assert.ok(!seeded.html.at(-1).inner.includes('已重設常用車站'));
+assert.ok(!seeded.html.at(-1).inner.includes('settings-confirm'));
 
 console.log('settings ok');
