@@ -29,6 +29,7 @@ grep -q "/assets/arrive-notify.js" index.html
 grep -q "assets/arrive-notify.js" sw.js
 node scripts/check-arrive-notify.js
 node scripts/check-walk.js
+node scripts/check-settings.js
 test -f manifest.webmanifest
 test -f _headers
 test -f data/catalogue.json

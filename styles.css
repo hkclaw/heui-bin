@@ -161,3 +161,23 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .install-card .btn{width:100%;margin-top:10px}
 .install-card .btn-ghost{color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.install-sheet{animation:none}}
+
+/* Home header gear. Same quiet pill as 「搜尋」, sitting in the left slot. */
+.btn.top-settings{min-width:3.5rem;padding:0 12px;color:var(--text)}
+.btn.top-settings .gear-icon{width:18px;height:18px;display:block}
+
+.settings-block{margin-bottom:18px}
+.settings-leads{margin-top:12px}
+.settings-leads .arm-lead{min-width:52px;min-height:44px;font-size:.95rem}
+.settings-row{width:100%}
+
+.about-block{display:grid;gap:8px;animation:.32s ease-out both rise}
+.about-name{margin:8px 0 0;font-size:1.8rem;font-weight:900;letter-spacing:.04em}
+.about-en{margin:0;color:var(--muted);font-size:.95rem;font-weight:700}
+.about-lead{margin:8px 0 4px;font-size:1.02rem;line-height:1.5}
+.about-facts{margin:8px 0 0;display:grid;gap:12px}
+.about-facts div{display:grid;gap:2px}
+.about-facts dt{margin:0;color:var(--muted);font-size:.75rem;font-weight:700}
+.about-facts dd{margin:0;font-size:.95rem;font-weight:700;line-height:1.45}
+.about-facts a{color:var(--cyan);display:block;font-weight:700;text-decoration:none;padding:2px 0}
+.about-facts a:active{opacity:.8}
