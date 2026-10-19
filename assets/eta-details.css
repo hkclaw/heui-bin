@@ -381,3 +381,95 @@ body:has(.app-shell.has-mode-bar .eta-tools) .sw-update {
 .nearby-list{min-height:168px}
 .nearby-skel li{min-height:56px;margin-bottom:8px;border:1px solid #00e5ff22;border-radius:var(--radius,12px);background:#ffffff06}
 #kmb-hint:empty{display:none}
+
+/* Ordered stops for the selected bus route. */
+.eta-stops{
+  display:flex;
+  width:100%;
+  justify-content:center;
+  margin-top:8px;
+  min-height:36px;
+}
+.eta-route-all.eta-stops.on{
+  color:#041018;
+  background:#19e6ff;
+  border-color:#19e6ff;
+}
+.rs-panel{
+  margin:0 0 14px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:#ffffff08;
+  overflow:hidden;
+}
+.rs-panel .state{padding:16px 12px}
+.rs-panel .eta-dir-empty{margin:0;padding:14px 12px}
+.rs-bound{
+  margin:0;
+  padding:10px 12px 0;
+  color:var(--muted);
+  font-size:.82rem;
+  font-weight:700;
+}
+.rs-dirs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:10px 12px 0;
+}
+.rs-dir{
+  max-width:100%;
+  min-height:32px;
+  padding:4px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#ffffff0d;
+  color:var(--ink);
+  font:inherit;
+  font-size:.78rem;
+  font-weight:700;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.rs-dir.on{
+  color:#041018;
+  background:#19e6ff;
+  border-color:#19e6ff;
+}
+.rs-list{
+  position:relative;
+  list-style:none;
+  margin:8px 0 0;
+  padding:0;
+  max-height:min(52vh,420px);
+  overflow:auto;
+}
+.rs-row{
+  width:100%;
+  display:grid;
+  grid-template-columns:2.2rem minmax(0,1fr) auto;
+  gap:8px;
+  align-items:center;
+  text-align:left;
+  background:transparent;
+  color:inherit;
+  border:0;
+  border-top:1px solid var(--line);
+  padding:10px 12px;
+  font:inherit;
+  min-height:44px;
+}
+.rs-row.is-here{
+  background:#19e6ff14;
+  box-shadow:inset 3px 0 0 #19e6ff;
+}
+.rs-seq{
+  color:var(--muted);
+  font-variant-numeric:tabular-nums;
+  font-weight:700;
+  font-size:.8rem;
+}
+.rs-name{font-weight:700;overflow-wrap:anywhere}
+.rs-here{color:#19e6ff;font-size:.75rem;font-weight:800}
+.rs-row.is-unknown{opacity:.55}
