@@ -181,5 +181,5 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .about-facts dd{margin:0;font-size:.95rem;font-weight:700;line-height:1.45}
 .about-facts a{color:var(--cyan);display:block;font-weight:700;text-decoration:none;padding:2px 0}
 .about-facts a:active{opacity:.8}
-.mode-chip-ctb.on{border-color:color-mix(in srgb,#f0c14a 70%,transparent);color:#fff4c2;box-shadow:0 0 12px #f0c14a66,0 0 28px #f0c14a33}
+.mode-chip-bus.on{border-color:color-mix(in srgb,#f0c14a 70%,transparent);color:#fff4c2;box-shadow:0 0 12px #f0c14a66,0 0 28px #f0c14a33}
 .chip-ctb{color:#b8c0cc;background:#ffffff0a;border:1px solid #f0c14a99}

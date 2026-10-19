@@ -1,4 +1,4 @@
-/* Locks the Citybus catalogue, the 城巴 chip, and joint-op ETA remarks. */
+/* Locks the Citybus catalogue and joint-op ETA remarks. The filter chip is the shared 巴士 union. */
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
@@ -33,14 +33,16 @@ for (const stop of stops) {
 }
 assert.ok(!bundle.includes('NWFB') && !bundle.includes('nwfb'));
 assert.ok(!JSON.stringify(stops).includes('NWFB'));
-assert.ok(bundle.includes('label:`城巴`'));
+assert.ok(bundle.includes('ctb:`城巴`'));
+assert.ok(!bundle.includes('label:`城巴`'));
 assert.ok(bundle.includes('https://rt.data.gov.hk/v1/transport/batch/stop-eta/CTB/'));
 assert.ok(bundle.includes('https://rt.data.gov.hk/v2/transport/citybus/eta/CTB/'));
 assert.ok(bundle.includes('t===`kmb`||t===`ctb`||t===`lrt`||t===`tml`||t===`mtr`'));
 assert.ok(bundle.includes('/data/ctb-stops.json'));
 assert.ok(bundle.includes('/data/ctb-routes.json'));
 for (const sheet of [css, shell]) {
-  assert.ok(sheet.includes('.mode-chip-ctb.on'));
+  assert.ok(sheet.includes('.mode-chip-bus.on'));
+  assert.ok(!sheet.includes('.mode-chip-ctb.on'));
   assert.ok(sheet.includes('.chip-ctb'));
 }
 assert.ok(fs.readFileSync(path.join(root, 'sw.js'), 'utf8').includes('data/ctb-stops.json'));
