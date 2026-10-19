@@ -207,9 +207,14 @@
   grid-template-columns: minmax(3.4em, max-content) minmax(4.5em, 1fr) minmax(0, max-content);
   padding: 10px 12px;
 }
-.eta-next .eta-list .eta-row:first-child {
-  border-color: rgba(25, 230, 255, 0.4);
-  background: rgba(25, 230, 255, 0.08);
+.eta-next .eta-list .eta-row:first-child,
+.eta-list .eta-row.is-hi {
+  border-color: rgba(143, 246, 255, 0.95);
+  background: rgba(25, 230, 255, 0.18);
+  box-shadow:
+    inset 3px 0 0 #19e6ff,
+    0 0 0 1px rgba(25, 230, 255, 0.34),
+    0 0 16px rgba(25, 230, 255, 0.2);
 }
 .eta-next .eta-list .eta-route {
   color: #f2f6f8;
@@ -237,6 +242,62 @@
 }
 .eta-tools .muted {
   min-width: 0;
+}
+
+/* Selected route chip: the 10% cyan fill read as a thin underline on a phone.
+   A solid accent chip matches the existing "fastest" pill and stays small. */
+.eta-route-bar .route-chip.on {
+  position: relative;
+  z-index: 1;
+  color: #041018;
+  background: #19e6ff;
+  border-color: #19e6ff;
+  box-shadow:
+    0 0 0 1px rgba(25, 230, 255, 0.4),
+    0 0 12px rgba(25, 230, 255, 0.38);
+  font-weight: 800;
+}
+
+/* 「重新整理」 is after the departure list, so bottom:sticky never pulls it
+   into view. Pin it the same way as the mode bar. This page does not render
+   .mode-bar; if both exist, the refresh bar sits above the tabs and the
+   update pill (normally 72px up) moves with them. */
+.app-shell:has(.eta-tools) {
+  padding-bottom: calc(76px + var(--safe-bottom));
+}
+.app-shell.has-mode-bar:has(.eta-tools) {
+  padding-bottom: calc(148px + var(--safe-bottom));
+}
+.app-shell .eta-tools {
+  position: fixed;
+  z-index: 35;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 8px 16px calc(8px + var(--safe-bottom));
+  border-top: 1px solid var(--line);
+  background: #0e1418f2;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.35);
+}
+.app-shell.has-mode-bar .eta-tools {
+  /* Mode bar is 10+44+10 padding plus a 1px top border. */
+  bottom: calc(66px + var(--safe-bottom));
+}
+.eta-tools .btn[data-action="refresh-eta"] {
+  flex: none;
+  min-height: 40px;
+  padding: 0 16px;
+  border-color: rgba(25, 230, 255, 0.55);
+  background: rgba(25, 230, 255, 0.16);
+  color: #e8fcff;
+  font-weight: 700;
+}
+body:has(.app-shell.has-mode-bar .eta-tools) .sw-update {
+  bottom: calc(136px + var(--safe-bottom));
 }
 
 
