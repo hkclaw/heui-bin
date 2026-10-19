@@ -71,3 +71,27 @@
     scrollbar-color:#8fa0a8 #ffffff14;
   }
 }
+
+/* pinned route, station share, opt-in arrival reminder */
+.top-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px}
+.eta-share{width:auto;min-width:44px;height:44px;padding:0 8px;font-size:.78rem;font-weight:800;letter-spacing:.02em}
+.eta-route-actions{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto}
+.eta-route-all.eta-pin.on{color:#ffd6f5;border-color:#ff2bd680;background:#ff2bd614}
+.pin-block{margin-bottom:22px}
+.pin-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:stretch}
+.pin-card .stop-name{overflow-wrap:anywhere}
+.pin-unpin{min-width:64px;min-height:44px;padding:8px;border:1px solid var(--line);border-radius:var(--radius);background:#ffffff0d;color:var(--muted);font-size:.82rem;font-weight:800}
+.pin-unpin:active{transform:scale(.98)}
+.eta-tools{flex-wrap:wrap;justify-content:flex-start;gap:8px}
+.eta-tools #eta-updated{margin-left:auto}
+.eta-arm.on{color:#d7f8ff;border-color:#19e6ff80}
+.eta-arm-note{margin:6px 0 0;font-size:.8rem}
+.eta-arm-note[hidden]{display:none}
+
+.eta-tools #eta-arm-note{flex:1 0 100%;margin:0;font-size:.78rem}
+.app-shell:has(#eta-arm-note:not([hidden])){padding-bottom:calc(112px + var(--safe-bottom))}
+
+@media (max-width: 380px) {
+  .app-shell:has(.eta-tools) { padding-bottom: calc(116px + var(--safe-bottom)); }
+  .app-shell:has(#eta-arm-note:not([hidden])) { padding-bottom: calc(152px + var(--safe-bottom)); }
+}

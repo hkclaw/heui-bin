@@ -144,7 +144,7 @@ Hash routes in the bundle: `#/`, `#/search`, `#/search/<query>`, `#/route/<route
 - Static HTML, CSS, and one minified JavaScript bundle.
 - Hash router. Leaflet 1.9.4 and OpenStreetMap tiles draw the nearby-stop map.
 - Workbox 7.4.0.
-- `localStorage` keys: `tap-eta-favorites-v1`, `tap-eta-mode-filter-v1`, `tap-eta-recent-search-v1`, `tap-eta-entrance-v1`.
+- `localStorage` keys: `tap-eta-favorites-v1`, `tap-eta-pinned-routes-v1`, `tap-eta-mode-filter-v1`, `tap-eta-recent-search-v1`, `tap-eta-entrance-v1`.
 - Live times, requested by the phone:
   - KMB/LWB stops and ETA: `https://data.etabus.gov.hk/v1/transport/kmb/`
   - MTR schedule: `https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php`
