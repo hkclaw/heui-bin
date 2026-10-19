@@ -289,6 +289,9 @@
       row = main.querySelector('.arrive-install-row');
     }
     row.hidden = !entryVisible(currentEnv(), readEntryDismissed(ls()));
+    /* Keep the reserved band in sync. Hiding the row without dropping the
+       class would leave a gap; showing it without the class would push. */
+    if (doc.documentElement) doc.documentElement.classList.toggle('show-install-entry', !row.hidden);
   }
 
   function syncNote() {
@@ -336,18 +339,13 @@
     }
   }
 
-  var queued = false;
   function queue() {
-    if (queued) return;
-    queued = true;
-    var raf = root.requestAnimationFrame || function (fn) { return root.setTimeout(fn, 16); };
-    raf(function () {
-      queued = false;
-      try {
-        syncEntry();
-        syncNote();
-      } catch (e) {}
-    });
+    // Run before the next paint. A frame delay inserted 「加到主畫面」
+    // after home had already painted and pushed the page down.
+    try {
+      syncEntry();
+      syncNote();
+    } catch (e) {}
   }
 
   function start() {
