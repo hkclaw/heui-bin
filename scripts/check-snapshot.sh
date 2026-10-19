@@ -32,6 +32,7 @@ node scripts/check-walk.js
 node scripts/check-settings.js
 node scripts/check-ctb.js
 node scripts/check-bus-filter.js
+node scripts/check-nearby-rank.js
 test -f manifest.webmanifest
 test -f _headers
 test -f data/catalogue.json
