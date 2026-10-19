@@ -184,4 +184,4 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .mode-chip-bus.on{border-color:color-mix(in srgb,#f0c14a 70%,transparent);color:#fff4c2;box-shadow:0 0 12px #f0c14a66,0 0 28px #f0c14a33}
 .chip-ctb{color:#b8c0cc;background:#ffffff0a;border:1px solid #f0c14a99}
 .chip-nlb{color:#b8c0cc;background:#ffffff0a;border:1px solid #3ddc9799}
-.stop-recent{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid #19e6ff55;border-radius:999px;color:#9aefff;font-size:.72rem;font-weight:700;line-height:1.4;vertical-align:1px}
+.stop-kicker{display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-width:0}.stop-recent{display:inline-flex;align-items:center;flex:none;box-sizing:border-box;height:22px;margin:0;padding:0 8px;border:1px solid #ffffff38;border-radius:999px;background:#ffffff18;color:#f2f6f8;font-size:.68rem;font-weight:700;letter-spacing:.04em;line-height:1}

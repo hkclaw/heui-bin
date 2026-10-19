@@ -21,9 +21,16 @@ const emptySrc = sliceBetween('function recentEmpty()', 'function Vt(e){if(!e)re
 assert.ok(bundle.includes('recentTouch(localStorage,n.type,n.id)'));
 assert.ok(bundle.includes('return rankNearby(a,{limit:n,favorites:o,recents:s,pins:c})'));
 assert.ok(bundle.includes('rankTier===1?`<span class="stop-recent">最近</span>`'));
+assert.ok(bundle.includes('<div class="stop-kicker">${W(e.type)}${e.rankTier===1?`<span class="stop-recent">最近</span>`:``}</div>'));
+assert.ok(bundle.includes('<span class="stop-name">${U(e.name_tc)}</span>\n                ${Pt(e)}'));
+assert.ok(!bundle.includes('<span class="stop-name">${U(e.name_tc)}</span>\n                ${e.rankTier===1'));
 assert.ok(bundle.includes('tap-eta-recent-stops-v1'));
-assert.ok(css.includes('.stop-recent{'));
-assert.ok(shell.includes('.stop-recent{'));
+assert.ok(css.includes('.stop-kicker{display:flex;align-items:center'));
+assert.ok(shell.includes('.stop-kicker{display:flex;align-items:center'));
+assert.ok(css.includes('.stop-recent{display:inline-flex'));
+assert.ok(shell.includes('.stop-recent{display:inline-flex'));
+assert.ok(!css.includes('border:1px solid #19e6ff55'));
+assert.ok(!shell.includes('border:1px solid #19e6ff55'));
 
 const api = new Function(`${rankSrc} return { recentLoad, recentTouch, rankNearby, rankKey, RECENT_STOPS_CAP, NEAR_BOOST_M, NEAR_SLACK_M, PIN_NUDGE_M };`)();
 const { recentLoad, recentTouch, rankNearby, RECENT_STOPS_CAP, NEAR_BOOST_M, NEAR_SLACK_M, PIN_NUDGE_M } = api;
