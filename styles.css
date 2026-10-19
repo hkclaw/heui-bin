@@ -95,3 +95,46 @@
   .app-shell:has(.eta-tools) { padding-bottom: calc(116px + var(--safe-bottom)); }
   .app-shell:has(#eta-arm-note:not([hidden])) { padding-bottom: calc(152px + var(--safe-bottom)); }
 }
+
+/* Center 「去邊」/ page title on the bar. The back button and the
+   share + favorite cluster are different widths, so a 44px | 1fr | auto
+   grid centered the title in the leftover column instead of the bar. */
+.topbar-row{
+  position:relative;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  min-height:44px;
+}
+.topbar-row>:first-child{
+  justify-self:start;
+  grid-column:1;
+  position:relative;
+  z-index:1;
+}
+.topbar-row>:last-child{
+  justify-self:end;
+  grid-column:2;
+  position:relative;
+  z-index:1;
+}
+.topbar-row>.brand-wrap{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:max-content;
+  max-width:calc(100% - 10.5rem);
+  min-width:0;
+  margin:0;
+  z-index:0;
+  pointer-events:none;
+  text-align:center;
+}
+.topbar-row>.brand-wrap .brand{
+  pointer-events:auto;
+}
+.topbar-row>.brand-wrap .brand,
+.topbar-row>.brand-wrap .page-title{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
