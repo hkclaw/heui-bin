@@ -360,6 +360,21 @@ body:has(.app-shell.has-mode-bar .eta-tools) .sw-update {
 .eta-walk-map:active {
   background: rgba(25, 230, 255, 0.22);
 }
+.eta-walk-mins { order: 1; }
+.eta-walk-map { order: 2; }
+/* Leave-now status. Hidden until both the walk estimate and a next ETA exist. */
+.eta-leave {
+  order: 3;
+  flex: 1 0 100%;
+  margin: 0;
+  color: #f2f6f8;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.eta-leave[hidden] { display: none; }
+.eta-leave.is-make { color: var(--cyan, #19e6ff); }
+.eta-leave.is-miss { color: var(--danger, #ff7b9a); }
 
 #nearby-slot{min-height:320px}
 #nearby-slot .nearby-block{animation:none}
