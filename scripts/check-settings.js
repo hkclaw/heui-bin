@@ -21,7 +21,11 @@ assert.ok(!bundle.includes('function armPaint(){let e=P&&P.querySelector(`[data-
 for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('.btn.top-settings'));
   assert.ok(sheet.includes('.about-facts'));
+  assert.match(sheet, /\.topbar\{[^}]*-webkit-backdrop-filter:\s*none;[^}]*backdrop-filter:\s*none;[^}]*background:\s*#0e1418/);
+  assert.match(sheet, /\.topbar \.brand\{[^}]*text-shadow:\s*none/);
 }
+assert.ok(shell.includes('.topbar{z-index:5;padding:calc(10px + var(--safe-top)) 16px 10px'));
+assert.ok(shell.includes('position:sticky;top:0'));
 assert.ok(shell.includes('.topbar-row>.brand-wrap'));
 assert.ok(shell.includes('left:50%'));
 assert.ok(shell.includes('transform:translate(-50%,-50%)'));

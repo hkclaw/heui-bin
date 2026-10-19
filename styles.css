@@ -205,3 +205,16 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .alight-live{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px;padding:8px 10px 8px 14px;border:1px solid #ff2bd680;border-radius:14px;background:#ff2bd614}
 .alight-live .btn{min-height:36px;padding:0 12px}
 .alight-disable{justify-content:flex-start}
+
+/* Home header stays sticky under the status bar. The frosted blur was
+   rasterizing 「去邊」, the gear, and 「搜尋」 on Retina Safari, and the
+   title's 18px cyan halo read as a soft glow. Paint an opaque bar so
+   scrolled content still stays covered, without a filter on the glyphs. */
+.topbar{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  background:#0e1418;
+}
+.topbar .brand{
+  text-shadow:none;
+}
