@@ -24,6 +24,10 @@ grep -q "/assets/index-${rev}.css" index.html
 test -f "assets/index-${rev}.js"
 test -f "assets/index-${rev}.css"
 grep -q "$rev" sw.js
+test -f assets/arrive-notify.js
+grep -q "/assets/arrive-notify.js" index.html
+grep -q "assets/arrive-notify.js" sw.js
+node scripts/check-arrive-notify.js
 test -f manifest.webmanifest
 test -f _headers
 test -f data/catalogue.json

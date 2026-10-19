@@ -138,3 +138,26 @@
   text-overflow:ellipsis;
   white-space:nowrap;
 }
+
+/* Lead-time chips next to 「N分鐘前提醒」, plus the one-screen install sheet. */
+.arm-leads{display:inline-flex;gap:4px;align-items:center}
+.arm-lead{min-width:40px;min-height:40px;padding:0 8px;border:1px solid var(--line);border-radius:999px;background:#ffffff0d;color:var(--muted);font-size:.85rem;font-weight:800}
+.arm-lead.on,.arm-lead[aria-pressed="true"]{color:#d7f8ff;background:#00e5ff1a;border-color:#19e6ff80}
+.arrive-install-row{display:flex;align-items:center;gap:4px;margin:0 0 12px}
+.arrive-install{min-height:32px;padding:0;color:var(--muted);font-size:.82rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.arrive-install-x{width:32px;height:32px;color:var(--muted);font-size:1rem;line-height:1}
+.arrive-install-row[hidden],.install-sheet[hidden],.install-sheet .btn[hidden]{display:none!important}
+#eta-arm-note[data-arrive-install]{color:var(--text);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.install-sheet{position:fixed;z-index:80;left:50%;bottom:calc(16px + var(--safe-bottom));width:min(440px,calc(100% - 24px));translate:-50% 0;animation:.28s ease-out both rise}
+body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
+.install-card{position:relative;max-height:min(70dvh,480px);overflow:auto;padding:16px 16px 14px;border:1px solid #00e5ff59;border-radius:18px;background:#0e1418f2;box-shadow:var(--glow-cyan);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.install-sheet-x{position:absolute;top:6px;right:6px;width:44px;height:44px;color:var(--muted);font-size:1.3rem;line-height:1}
+.install-kicker{margin:0;color:var(--cyan);font-size:.75rem;font-weight:800;letter-spacing:.04em}
+.install-card h2{margin:2px 36px 10px 0;font-size:1.15rem;font-weight:900}
+.install-steps{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.install-steps li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center;font-weight:700}
+.install-step-no{width:28px;height:28px;display:grid;place-items:center;border-radius:999px;background:#ffffff14;color:var(--cyan);font-size:.82rem;font-weight:900}
+.install-note{margin:10px 0 0;color:var(--muted);font-size:.82rem;line-height:1.45}
+.install-card .btn{width:100%;margin-top:10px}
+.install-card .btn-ghost{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.install-sheet{animation:none}}
