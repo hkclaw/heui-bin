@@ -28,6 +28,7 @@ function sliceBetween(start, end) {
 const modeSrc = sliceBetween('function modeHit(e,t)', 'function C(e,t,n=80,r=null)');
 const searchSrc = sliceBetween('function C(e,t,n=80,r=null)', 'function E(e,t,n){let r=e.find');
 const nearbySrc = sliceBetween('function Pe(e,t,n=5,r=null)', 'function Fe(');
+const rankSrc = sliceBetween('/* RANK_BEGIN */', '/* RANK_END */');
 const etSrc = sliceBetween('function et(){', 'function tt(');
 const ttSrc = sliceBetween('function tt(e){', 'function M(');
 const mSrc = sliceBetween('function M(e){let t=et()===e?null:e;return tt(t),t}', 'var N=6');
@@ -38,7 +39,7 @@ const { modeHit, C, w, T } = new Function(
   `${modeSrc}${searchSrc} function ue(e){return e} return { modeHit, C, w, T };`
 )();
 const { Pe } = new Function(
-  `${modeSrc}${nearbySrc}
+  `${rankSrc}${modeSrc}${nearbySrc}
    function ue(e){return e}
    function Me(){return true}
    function Ne(o,s){return Math.hypot(o.lat-s.lat,o.lng-s.lng)}
