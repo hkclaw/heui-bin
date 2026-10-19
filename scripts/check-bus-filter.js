@@ -1,4 +1,4 @@
-/* Locks the 巴士 filter as a UI union of KMB/LWB, Citybus, and New Lantao Bus. */
+/* Locks the 巴士 filter as a UI union of KMB/LWB, Citybus, New Lantao Bus, and green minibuses. */
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
@@ -11,8 +11,9 @@ assert.ok(bundle.includes('Ye=[{type:`lrt`,label:`輕鐵`},{type:`mtr`,label:`�
 assert.ok(!bundle.includes('label:`九巴`'));
 assert.ok(!bundle.includes('label:`城巴`'));
 assert.ok(bundle.includes('kmb:`九巴／龍運`,ctb:`城巴`'));
-assert.ok(bundle.includes('t===`kmb`||t===`ctb`||t===`nlb`||t===`lrt`||t===`tml`||t===`mtr`'));
-assert.ok(bundle.includes('function modeHit(e,t){return t==null||(t===`bus`?e===`kmb`||e===`ctb`||e===`nlb`:e===t)}'));
+assert.ok(bundle.includes('t===`kmb`||t===`ctb`||t===`nlb`||t===`gmb`||t===`lrt`||t===`tml`||t===`mtr`'));
+assert.ok(bundle.includes('function modeHit(e,t){return t==null||(t===`bus`?e===`kmb`||e===`ctb`||e===`nlb`||e===`gmb`:e===t)}'));
+assert.ok(!bundle.includes('label:`專線小巴`'));
 assert.ok(bundle.includes('ue(e).filter(e=>modeHit(e.type,r))'));
 assert.ok(bundle.includes('if(modeHit(t.type,r))for(let e of t.routes??[])'));
 assert.ok(bundle.includes('ue(e).filter(e=>modeHit(e.type,n)&&(e.routes??[]).some(e=>e.toUpperCase()===r))'));
@@ -50,15 +51,18 @@ const stops = [
   { type: 'kmb', id: 'k1', name_tc: '九巴站', name_en: 'KMB Stop', routes: ['1', '269C'], lat: 22.3, lng: 114.1 },
   { type: 'ctb', id: 'c1', name_tc: '城巴站', name_en: 'CTB Stop', routes: ['1', '720'], lat: 22.31, lng: 114.11 },
   { type: 'nlb', id: 'n1', name_tc: '嶼巴站', name_en: 'NLB Stop', routes: ['B2', 'A35'], lat: 22.32, lng: 114.12 },
+  { type: 'gmb', id: '20003337', name_tc: '小巴站', name_en: 'GMB Stop', routes: ['69'], lat: 22.305, lng: 114.105 },
   { type: 'lrt', id: 'l1', name_tc: '輕鐵站', name_en: 'LRT Stop', routes: ['610'], lat: 22.4, lng: 114.2 },
   { type: 'mtr', id: 'm1', name_tc: '港鐵站', name_en: 'MTR Stop', routes: ['TML'], lat: 22.5, lng: 114.3 },
 ];
 const types = (rows) => rows.map((row) => row.type).sort();
 
-assert.deepStrictEqual(types(C(stops, '站', 80, 'bus')), ['ctb', 'kmb', 'nlb']);
-assert.deepStrictEqual(types(C(stops, '站', 80, null)), ['ctb', 'kmb', 'lrt', 'mtr', 'nlb']);
+assert.deepStrictEqual(types(C(stops, '站', 80, 'bus')), ['ctb', 'gmb', 'kmb', 'nlb']);
+assert.deepStrictEqual(types(C(stops, '站', 80, null)), ['ctb', 'gmb', 'kmb', 'lrt', 'mtr', 'nlb']);
 assert.deepStrictEqual(types(C(stops, '站', 80, 'lrt')), ['lrt']);
 assert.deepStrictEqual(types(C(stops, '九巴', 80, 'bus')), ['kmb']);
+assert.deepStrictEqual(types(C(stops, '小巴', 80, 'bus')), ['gmb']);
+assert.deepStrictEqual(types(C(stops, '小巴', 80, 'lrt')), []);
 assert.deepStrictEqual(w(stops, '1', 24, 'bus').map((row) => row.route), ['1']);
 assert.deepStrictEqual(w(stops, '720', 24, 'bus').map((row) => row.route), ['720']);
 assert.deepStrictEqual(w(stops, 'B2', 24, 'bus').map((row) => row.route), ['B2']);
@@ -72,20 +76,27 @@ assert.deepStrictEqual(types(T(stops, '1', null)), ['ctb', 'kmb']);
 assert.deepStrictEqual(types(T(stops, '720', 'bus')), ['ctb']);
 assert.deepStrictEqual(types(T(stops, 'B2', 'bus')), ['nlb']);
 assert.deepStrictEqual(types(T(stops, 'A35', 'bus')), ['nlb']);
+assert.deepStrictEqual(w(stops, '69', 24, 'bus').map((row) => row.route), ['69']);
+assert.deepStrictEqual(w(stops, '69', 24, 'lrt'), []);
+assert.deepStrictEqual(types(T(stops, '69', 'bus')), ['gmb']);
+assert.deepStrictEqual(types(T(stops, '69', 'lrt')), []);
 assert.deepStrictEqual(types(T(stops, '610', 'bus')), []);
 assert.deepStrictEqual(types(T(stops, '269C', 'lrt')), []);
 assert.strictEqual(modeHit('kmb', 'bus'), true);
 assert.strictEqual(modeHit('ctb', 'bus'), true);
 assert.strictEqual(modeHit('nlb', 'bus'), true);
+assert.strictEqual(modeHit('gmb', 'bus'), true);
+assert.strictEqual(modeHit('gmb', 'lrt'), false);
+assert.strictEqual(modeHit('gmb', null), true);
 assert.strictEqual(modeHit('nlb', 'lrt'), false);
 assert.strictEqual(modeHit('lrt', 'bus'), false);
 assert.strictEqual(modeHit('mtr', null), true);
 assert.strictEqual(modeHit('kmb', 'kmb'), true);
 
 const nearBus = Pe(stops, { lat: 22.3, lng: 114.1 }, 5, 'bus');
-assert.deepStrictEqual(nearBus.map((row) => row.type), ['kmb', 'ctb', 'nlb']);
+assert.deepStrictEqual(nearBus.map((row) => row.type), ['kmb', 'gmb', 'ctb', 'nlb']);
 assert.deepStrictEqual(Pe(stops, { lat: 22.3, lng: 114.1 }, 5, 'lrt').map((row) => row.id), ['l1']);
-assert.strictEqual(Pe(stops, { lat: 22.3, lng: 114.1 }, 5, null).length, 5);
+assert.strictEqual(Pe(stops, { lat: 22.3, lng: 114.1 }, 8, null).length, 6);
 
 function memory() {
   const store = new Map();
@@ -139,6 +150,7 @@ assert.ok(chips.includes('>輕鐵</button>'));
 assert.ok(chips.includes('>港鐵</button>'));
 assert.ok(!chips.includes('九巴'));
 assert.ok(!chips.includes('城巴'));
+assert.ok(!chips.includes('專線小巴'));
 assert.ok(chips.includes('data-mode-chip="bus"'));
 assert.ok(chips.includes('data-mode-chip="lrt"'));
 assert.ok(chips.includes('data-mode-chip="mtr"'));

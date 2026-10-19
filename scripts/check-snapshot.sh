@@ -37,6 +37,7 @@ node scripts/check-leave.js
 node scripts/check-settings.js
 node scripts/check-ctb.js
 node scripts/check-nlb.js
+node scripts/check-gmb.js
 node scripts/check-bus-filter.js
 node scripts/check-fares.js
 node scripts/check-nearby-rank.js
@@ -52,6 +53,8 @@ test -f data/ctb-routes.json
 test -f data/fares.json
 test -f data/nlb-stops.json
 test -f data/nlb-routes.json
+test -f data/gmb-stops.json
+test -f data/gmb-routes.json
 test -f data/lrt-stations.json
 test -f data/mtr-stations.json
 test -f data/tml-stations.json

@@ -257,3 +257,4 @@ body:has(.mode-bar) .install-sheet{bottom:calc(76px + var(--safe-bottom))}
 .settings-confirm-copy{margin:0 0 10px;font-weight:700;line-height:1.45}
 .settings-confirm-actions{display:flex;justify-content:flex-end;gap:8px}
 .settings-note{margin:10px 2px 0}
+.chip-gmb{color:#eaffc2;background:#ffffff0a;border:1px solid #d6ff4a99}
