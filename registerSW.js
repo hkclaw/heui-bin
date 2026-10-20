@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?rev=v20261019w', { scope: '/' }).then(function (reg) {
+  navigator.serviceWorker.register('/sw.js?rev=v20261019x', { scope: '/' }).then(function (reg) {
     function showBanner(worker) {
       try {
         if (document.getElementById('sw-update-banner')) return;

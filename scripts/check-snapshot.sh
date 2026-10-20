@@ -45,6 +45,7 @@ node scripts/check-home-layout.js
 node scripts/check-route-stops.js
 node scripts/check-dir-scroll.js
 node scripts/check-search-pad.js
+node scripts/check-recent-search.js
 test -f manifest.webmanifest
 test -f _headers
 test -f data/catalogue.json
