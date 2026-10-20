@@ -24,6 +24,11 @@ for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('#nearby-slot .stop-card{animation:none}'));
   assert.ok(sheet.includes('#nearby-slot .nearby-map-sm{max-height:180px}'));
   assert.ok(sheet.includes('.fav-live-card .fav-eta{min-height:5.8rem}'));
+  const favReserve = sheet.indexOf('.fav-live-card .fav-eta{min-height:5.8rem}');
+  const favDense = sheet.indexOf('.fav-live-card .fav-eta{min-height:4.7rem}');
+  assert.ok(favDense > favReserve);
+  assert.ok(sheet.includes('.fav-live-card{row-gap:4px;column-gap:8px;padding:8px 12px}'));
+  assert.ok(sheet.includes('.fav-eta-preview{gap:2px}'));
   assert.ok(sheet.includes('#kmb-hint:not(:empty){position:fixed;'));
   assert.ok(!sheet.includes('#nearby-slot:has(.nearby-pending)'));
   assert.ok(sheet.includes('#nearby-slot:has(.nearby-noloc)'));

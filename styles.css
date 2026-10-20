@@ -278,3 +278,22 @@ button{-webkit-appearance:none;appearance:none}
 .app-shell .eta-tools{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0e1418}
 .stop-card{animation-fill-mode:none}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* 常用車站 sits above the map. The tall parts were card padding, header
+   leading, and the gap between ETA rows. The station, direction line,
+   and three previews stay. Nearby stop cards keep the looser padding. */
+.fav-block{margin-bottom:14px}
+.fav-block .list-head{margin-bottom:6px}
+.fav-live-list{gap:8px}
+.fav-live-card{row-gap:4px;column-gap:8px;padding:8px 12px}
+.fav-live-card .stop-card-main{gap:1px}
+.fav-live-card .chip{padding:1px 7px;line-height:1.2}
+.fav-live-card .stop-name{line-height:1.2}
+.fav-live-card .stop-bound{line-height:1.25}
+.fav-live-card .fav-eta{min-height:4.7rem}
+.fav-live-card .state.compact{padding:6px 0}
+.fav-eta-preview{gap:2px}
+.fav-eta-preview li{align-items:center;gap:8px;line-height:1.15}
+.fav-live-card .fav-eta-mins{font-size:1.4rem;line-height:1}
+.fav-live-card .fav-eta-mins .eta-mins-num{font-size:1.45rem;line-height:1}
+.fav-live-card .fav-eta-mins .eta-mins-unit{font-size:.74rem}
