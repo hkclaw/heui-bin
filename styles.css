@@ -279,9 +279,9 @@ button{-webkit-appearance:none;appearance:none}
 .stop-card{animation-fill-mode:none}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-/* 常用車站 sits above the map. The tall parts were card padding, header
-   leading, and the gap between ETA rows. The station, direction line,
-   and three previews stay. Nearby stop cards keep the looser padding. */
+/* 常用車站 sits above the map. Card padding and header leading stay
+   tight. Nearby stop cards keep the looser padding. Pinned routes
+   still show their ETA rows. */
 .fav-block{margin-bottom:14px}
 .fav-block .list-head{margin-bottom:6px}
 .fav-live-list{gap:8px}
@@ -297,3 +297,8 @@ button{-webkit-appearance:none;appearance:none}
 .fav-live-card .fav-eta-mins{font-size:1.4rem;line-height:1}
 .fav-live-card .fav-eta-mins .eta-mins-num{font-size:1.45rem;line-height:1}
 .fav-live-card .fav-eta-mins .eta-mins-unit{font-size:.74rem}
+
+/* 常用車站 is the station only. The chevron stays on the first row so
+   the old ETA track does not leave a gap. 釘選路線 still previews ETAs. */
+.fav-block .fav-live-card{grid-template-rows:auto;align-items:center}
+.fav-block .fav-live-card .chevron{grid-area:1/2;align-self:center}

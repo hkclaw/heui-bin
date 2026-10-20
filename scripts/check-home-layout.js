@@ -40,6 +40,21 @@ for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('.stop-card{animation-fill-mode:none}'));
 }
 
+const favCard = bundle.slice(bundle.lastIndexOf('function Ft(e){return`'), bundle.indexOf('function padApply'));
+assert.ok(favCard.includes('stop-name'));
+assert.ok(favCard.includes('${W(e.type)}'));
+assert.ok(favCard.includes('${Pt(e)}'));
+assert.ok(favCard.includes('data-nav='));
+assert.ok(!favCard.includes('fav-eta'));
+assert.ok(!favCard.includes('載入班次'));
+assert.ok(bundle.includes('data-pin-eta'));
+assert.ok(bundle.includes('setInterval(()=>pinSync(e)'));
+assert.ok(!bundle.includes('setInterval(()=>{Mt(e),pinSync(e)}'));
+for (const sheet of [css, shell]) {
+  assert.ok(sheet.includes('.fav-block .fav-live-card{grid-template-rows:auto;align-items:center}'));
+  assert.ok(sheet.includes('.fav-block .fav-live-card .chevron{grid-area:1/2;align-self:center}'));
+}
+
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 assert.ok(html.includes("document.documentElement.classList.add('show-install-entry')"));
 const arrive = fs.readFileSync(path.join(root, 'assets', 'arrive-notify.js'), 'utf8');
