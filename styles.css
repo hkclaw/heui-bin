@@ -325,3 +325,177 @@ button{-webkit-appearance:none;appearance:none}
 #eta-updated.is-stale{color:#f3ddb0;font-weight:700}
 .offline-banner{position:fixed;z-index:40;top:0;left:0;right:0;padding:calc(8px + var(--safe-top)) 16px 8px;background:#24181c;color:#ffd7e0;border-bottom:1px solid #ff7b9a66;font-size:.84rem;font-weight:700;line-height:1.35;text-align:center}
 html.is-offline .topbar{top:var(--offline-h,0px);padding-top:10px}
+
+/* calm-hierarchy: one primary reading on home and on the stop ETA.
+   附近 is the heading; 常用 and 釘選 are kickers. The next arrival is
+   the hero. Stale minutes stay amber, ghost rows stay ghosts, and the
+   offline bar is untouched. No new motion. */
+.fav-block .section-label,
+.pin-block .section-label{
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+.nearby-block>.section-label{
+  color:var(--text);
+  font-size:1.22rem;
+  font-weight:800;
+  letter-spacing:0;
+  line-height:1.2;
+}
+.fav-block{margin-bottom:20px}
+.nearby-block{margin-top:2px}
+.fav-block .fav-live-card{
+  background:#ffffff08;
+  box-shadow:none;
+}
+.fav-block .fav-live-card .stop-bound{
+  color:var(--muted);
+  font-weight:500;
+}
+.nearby-list:not(.nearby-skel)>li:first-child .stop-card{
+  border-color:color-mix(in srgb,var(--cyan) 48%,transparent);
+  box-shadow:inset 3px 0 0 var(--cyan);
+}
+.nearby-list:not(.nearby-skel)>li:first-child .stop-name{font-weight:800}
+.nearby-list:not(.nearby-skel)>li:not(:first-child) .stop-bound{
+  color:var(--muted);
+  font-weight:500;
+}
+.nearby-map{border-color:var(--line);box-shadow:none}
+.pin-card .fav-eta-mins:not(:has(.eta-mins-num)){
+  color:var(--muted);
+  font-size:.82rem;
+  font-weight:600;
+  white-space:normal;
+}
+.pin-unpin{background:transparent;color:var(--muted);font-weight:600}
+.topbar .btn.top-search{
+  min-width:44px;
+  min-height:44px;
+  color:var(--muted);
+  background:transparent;
+  font-weight:600;
+}
+.mode-chip{min-height:44px;box-shadow:none}
+.mode-chip-lrt.on,
+.mode-chip-kmb.on,
+.mode-chip-mtr.on,
+.mode-chip-tml.on,
+.mode-chip-bus.on{box-shadow:none}
+.star-btn.on,
+.star-btn.top.on{text-shadow:none}
+.eta-head .stop-bound{
+  color:color-mix(in srgb,var(--cyan) 55%,var(--muted));
+  font-size:.8rem;
+  font-weight:500;
+  line-height:1.35;
+}
+.eta-head .stop-en{font-size:.75rem}
+.eta-name{font-size:1.4rem}
+.eta-walk{margin-top:6px;gap:2px 10px}
+.eta-walk-mins{color:var(--muted);font-size:.78rem;font-weight:600}
+.eta-leave{color:var(--muted);font-size:.78rem;font-weight:600}
+.eta-leave.is-make{color:var(--cyan)}
+.eta-leave.is-miss{color:var(--danger)}
+.eta-walk-map{
+  min-height:32px;
+  padding:0 2px;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  box-shadow:none;
+}
+.eta-route-bar .section-label,
+.eta-next .section-label{
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.06em;
+}
+.eta-meta>.fare{color:var(--muted);font-size:.68rem;font-weight:500}
+.eta-dir-tab.on{box-shadow:none}
+.eta-dir-tab-eta .eta-mins-num{font-size:1.05rem}
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row){
+  border-color:color-mix(in srgb,var(--cyan) 50%,transparent);
+  background:color-mix(in srgb,var(--cyan) 10%,transparent);
+  box-shadow:inset 3px 0 0 var(--cyan);
+}
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-route,
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-route,
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-route{
+  font-size:1.28rem;
+  font-weight:800;
+}
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins,
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins,
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins{
+  font-size:1.2rem;
+  font-weight:800;
+}
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins .eta-mins-num,
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins .eta-mins-num,
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins .eta-mins-num,
+.eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row) .eta-mins .eta-mins-num{
+  font-size:2.15rem;
+  font-weight:900;
+  letter-spacing:-.03em;
+  line-height:1;
+}
+.eta-body:not(.is-stale) .eta-next .eta-list:not(.eta-skel)>.eta-row:not(:first-child):not(.is-hi) .eta-mins .eta-mins-num,
+.eta-body:not(.is-stale) .eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:not(:first-child):not(.is-hi) .eta-mins .eta-mins-num,
+.eta-body:not(.is-stale) .lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:not(:first-child):not(.is-hi) .eta-mins .eta-mins-num{
+  font-size:1.28rem;
+  font-weight:800;
+}
+.eta-body.is-stale .eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-body.is-stale .eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-body.is-stale .lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row){
+  border-color:#f0c14b66;
+  background:#f0c14b14;
+  box-shadow:inset 3px 0 0 #f0c14b;
+}
+.app-shell .eta-tools .btn[data-action="refresh-eta"]{
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--muted);
+  font-weight:600;
+  box-shadow:none;
+}
+.lrt-plat.is-fastest{
+  border-color:color-mix(in srgb,var(--cyan) 45%,transparent);
+  box-shadow:inset 3px 0 0 var(--cyan);
+}
+@media (prefers-reduced-motion:reduce){
+  .stop-card,
+  .nearby-block,
+  .fav-block,
+  .list-head,
+  .eta-head,
+  .about-block,
+  .install-sheet,
+  .sw-update,
+  .mode-chip,
+  .btn{animation:none;transition:none}
+}
+/* Stale minutes and ghost rows win over the hero type, so a cached ETA
+   cannot read as live and a skeleton cannot pick up the countdown size. */
+.eta-body.is-stale .eta-time,
+.eta-body.is-stale .eta-mins,
+.eta-body.is-stale .eta-mins-num,
+.eta-body.is-stale .eta-next-soon{color:#f3ddb0}
+.eta-skel-row .eta-route,
+.eta-skel-row .eta-dest,
+.eta-skel-row .eta-time{color:transparent;background:#ffffff14;border-radius:6px}
+ul.eta-list.eta-skel>li.eta-row.eta-skel-row{
+  border-color:var(--line);
+  background:#ffffff0b;
+  box-shadow:none;
+}

@@ -47,6 +47,7 @@ node scripts/check-dir-scroll.js
 node scripts/check-search-pad.js
 node scripts/check-recent-search.js
 node scripts/check-offline-eta.js
+node scripts/check-calm.js
 test -f manifest.webmanifest
 test -f _headers
 test -f data/catalogue.json
