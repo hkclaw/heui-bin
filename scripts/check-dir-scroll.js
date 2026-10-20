@@ -13,7 +13,7 @@ assert.ok(src.includes('function paintEta(el,type,rows,stop)'));
 assert.ok(!src.includes('.innerHTML=Gt('), 'eta body must not remount without restoring scroll');
 assert.ok(src.includes('t&&(paintEta(t,I.type,vt,I));leavePaint();'), 'tapping a direction pill repaints through paintEta');
 assert.ok(src.includes('paintEta(e,n.type,r,n)'), 'ETA refresh repaints through paintEta');
-assert.equal((src.match(/paintEta\(/g) || []).length, 11);
+assert.equal((src.match(/paintEta\(/g) || []).length, 13);
 
 const start = src.indexOf('function paintEta(');
 const end = src.indexOf('function Gt(e,t,n){if(e===`kmb`');

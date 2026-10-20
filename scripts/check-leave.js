@@ -195,7 +195,9 @@ assert.ok(!html.includes('而家走趕得切'));
 assert.ok(!html.includes('趕唔切'));
 
 assert.ok(src.includes('armCheck(n,r),leavePaint()'), 'ETA refresh must repaint the hint');
-assert.ok(src.includes('</div>`,leavePaint()}finally'), 'a failed ETA load must clear the hint');
+assert.ok(src.includes('</div>`,leavePaint()'), 'a failed ETA load must clear the hint');
+assert.ok(src.includes('decision.kind===`stale`'));
+assert.ok(src.includes('P.querySelector(`#eta-body.is-stale`)'));
 assert.ok(src.includes('syncEtaHash();let n=P.querySelector(`#eta-body`);n&&vt.length&&(paintEta(n,I.type,vt,I));leavePaint();'));
 assert.ok(src.includes('t&&(paintEta(t,I.type,vt,I));leavePaint();'));
 assert.ok(src.includes('leavePaint();let a=P.querySelector(`#eta-route-q`)'));

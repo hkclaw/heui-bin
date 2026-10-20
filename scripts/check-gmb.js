@@ -50,7 +50,7 @@ for (const sheet of [css, shell]) assert.ok(sheet.includes('.chip-gmb'));
 assert.ok(sw.includes('data/gmb-stops.json'));
 assert.ok(sw.includes('data/gmb-routes.json'));
 assert.ok(sw.includes('etagmb'));
-assert.ok(sw.includes('heui-bin-gmb-eta-'));
+assert.ok(sw.includes('etagmb\\.gov\\.hk\\/.*/i,new e.NetworkOnly'), 'GMB ETA must not be replayed from the SW cache as a fresh response');
 
 const start = bundle.indexOf('/* GMB_BEGIN */');
 const end = bundle.indexOf('/* GMB_END */');
