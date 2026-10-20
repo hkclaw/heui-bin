@@ -196,8 +196,8 @@ assert.ok(!html.includes('趕唔切'));
 
 assert.ok(src.includes('armCheck(n,r),leavePaint()'), 'ETA refresh must repaint the hint');
 assert.ok(src.includes('</div>`,leavePaint()}finally'), 'a failed ETA load must clear the hint');
-assert.ok(src.includes('syncEtaHash();let n=P.querySelector(`#eta-body`);n&&vt.length&&(n.innerHTML=Gt(I.type,vt,I));leavePaint();'));
-assert.ok(src.includes('t&&(t.innerHTML=Gt(I.type,vt,I));leavePaint();'));
+assert.ok(src.includes('syncEtaHash();let n=P.querySelector(`#eta-body`);n&&vt.length&&(paintEta(n,I.type,vt,I));leavePaint();'));
+assert.ok(src.includes('t&&(paintEta(t,I.type,vt,I));leavePaint();'));
 assert.ok(src.includes('leavePaint();let a=P.querySelector(`#eta-route-q`)'));
 assert.ok(src.includes('i.textContent=r}leavePaint()'), 'a location fix must repaint the hint');
 

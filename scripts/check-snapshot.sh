@@ -43,6 +43,7 @@ node scripts/check-fares.js
 node scripts/check-nearby-rank.js
 node scripts/check-home-layout.js
 node scripts/check-route-stops.js
+node scripts/check-dir-scroll.js
 node scripts/check-search-pad.js
 test -f manifest.webmanifest
 test -f _headers

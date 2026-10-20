@@ -26,7 +26,7 @@ assert.ok(bundle.includes('data-action="share-station"'));
 assert.ok(bundle.includes('data-pin-route'));
 assert.ok(bundle.includes('if(e===`kmb`||e===`ctb`||e===`nlb`||e===`gmb`)return $k(t,n)'));
 assert.ok(bundle.includes('armCheck(n,r),leavePaint(),rsOpen&&rsEnsure()'));
-assert.ok(bundle.includes('syncEtaHash();let n=P.querySelector(`#eta-body`);n&&vt.length&&(n.innerHTML=Gt(I.type,vt,I));leavePaint();'));
+assert.ok(bundle.includes('syncEtaHash();let n=P.querySelector(`#eta-body`);n&&vt.length&&(paintEta(n,I.type,vt,I));leavePaint();'));
 for (const sheet of sheets) {
   assert.ok(sheet.includes('.rs-panel'));
   assert.ok(sheet.includes('.rs-row.is-here'));
