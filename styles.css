@@ -603,13 +603,14 @@ html.show-install-entry .arrive-install-row{
 .fav-block .list-head,
 .eta-next-head,
 .eta-route-bar-head{
-  margin-bottom:var(--space-2);
+  margin-bottom:var(--space-3);
   padding-left:var(--card-pad-x);
   padding-right:var(--card-pad-x);
 }
 .nearby-block>.section-label,
 .search-stops>.section-label,
 .recent-label{
+  margin-bottom:var(--space-3);
   padding-left:var(--card-pad-x);
   padding-right:var(--card-pad-x);
 }
@@ -619,7 +620,7 @@ html.show-install-entry .arrive-install-row{
   letter-spacing:-.02em;
   line-height:1.15;
 }
-.recent-label{margin:0 0 var(--space-2)}
+.recent-label{margin:0 0 var(--space-3)}
 .recent-searches{margin-top:var(--space-3)}
 .recent-chips{
   gap:var(--space-2);
