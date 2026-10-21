@@ -98,7 +98,7 @@
 .app-shell:has(#eta-arm-note:not([hidden])){padding-bottom:calc(148px + var(--safe-bottom))}
 
 @media (max-width: 380px) {
-  .app-shell:has(.eta-tools) { padding-bottom: calc(116px + var(--safe-bottom)); }
+  .app-shell:has(.eta-tools) { padding-bottom: calc(120px + var(--safe-bottom)); }
   .app-shell:has(#eta-arm-note:not([hidden])) { padding-bottom: calc(152px + var(--safe-bottom)); }
 }
 
@@ -498,4 +498,273 @@ ul.eta-list.eta-skel>li.eta-row.eta-skel-row{
   border-color:var(--line);
   background:#ffffff0b;
   box-shadow:none;
+}
+
+/* spatial-rhythm: one gutter, one card inset, one section step.
+   Scale is 4 / 8 / 12 / 16 / 20 / 24 / 32. Stop-page bottom reserves
+   stay 120px, and 148px while the arrival note is open — those clear
+   the refresh bar and the update pill. This block does not shrink them.
+   Safe-area bottom lives on the bottom-most bar only. */
+:root{
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-8:32px;
+  --gutter:var(--space-4);
+  --card-pad-x:var(--space-4);
+  --card-pad-y:var(--space-3);
+  --section-gap:var(--space-5);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+  --inline-start:calc(var(--gutter) + var(--safe-left));
+  --inline-end:calc(var(--gutter) + var(--safe-right));
+  --mode-bar-h:60px;
+}
+.topbar{
+  padding-top:calc(var(--space-2) + var(--safe-top));
+  padding-bottom:var(--space-2);
+  padding-left:var(--inline-start);
+  padding-right:var(--inline-end);
+  border-bottom-width:0;
+}
+.topbar::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  height:var(--space-4);
+  pointer-events:none;
+  background:linear-gradient(#0e1418,transparent);
+}
+html.is-offline .topbar{
+  padding-top:var(--space-2);
+  padding-left:var(--inline-start);
+  padding-right:var(--inline-end);
+}
+.offline-banner{
+  padding-left:var(--inline-start);
+  padding-right:var(--inline-end);
+}
+.main{
+  padding:var(--space-4) var(--inline-end) var(--space-4) var(--inline-start);
+}
+.footer{
+  padding:var(--space-3) var(--inline-end) var(--space-2) var(--inline-start);
+  line-height:1.45;
+}
+.mode-bar{
+  padding:var(--space-2) var(--inline-end) calc(var(--space-2) + var(--safe-bottom)) var(--inline-start);
+  border-top-width:0;
+}
+.mode-bar::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:100%;
+  height:var(--space-3);
+  pointer-events:none;
+  background:linear-gradient(transparent,#0e1418f0);
+}
+.app-shell:not(.has-mode-bar):not(:has(.eta-tools)){
+  padding-bottom:calc(var(--space-3) + var(--safe-bottom));
+}
+.app-shell.has-mode-bar{
+  padding-bottom:calc(var(--mode-bar-h) + var(--safe-bottom));
+}
+.app-shell.has-mode-bar .footer{
+  padding-bottom:var(--space-3);
+}
+.app-shell .eta-tools{
+  padding-left:var(--inline-start);
+  padding-right:var(--inline-end);
+}
+html.show-install-entry .arrive-install-row{
+  top:var(--space-4);
+  left:var(--inline-start);
+  right:var(--inline-end);
+}
+.nearby-block,
+.fav-block,
+.pin-block,
+.settings-block,
+.search-panel,
+.search-stops,
+.about-block{
+  margin-top:0;
+  margin-bottom:var(--section-gap);
+}
+.main>:last-child{margin-bottom:0}
+.list-head,
+.fav-block .list-head,
+.eta-next-head,
+.eta-route-bar-head{
+  margin-bottom:var(--space-2);
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.nearby-block>.section-label,
+.search-stops>.section-label,
+.recent-label{
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.nearby-block>.section-label{
+  font-size:1.16rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.15;
+}
+.recent-label{margin:0 0 var(--space-2)}
+.recent-searches{margin-top:var(--space-3)}
+.recent-chips{
+  gap:var(--space-2);
+  padding:0 var(--card-pad-x);
+}
+.recent-chip{
+  min-height:44px;
+  padding:0 var(--space-3);
+}
+.hint{
+  margin:var(--space-2) 0 0;
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+  line-height:1.45;
+}
+.stop-list{gap:var(--space-2)}
+.stop-card{padding:var(--card-pad-y) var(--card-pad-x)}
+.fav-block .fav-live-card{
+  padding-top:var(--space-2);
+  padding-bottom:var(--space-2);
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.settings-manage{gap:var(--space-2)}
+.settings-item,
+.settings-confirm{padding:var(--space-3) var(--card-pad-x)}
+.settings-confirm{margin-top:var(--space-2)}
+.settings-confirm-copy{margin:0 0 var(--space-2)}
+.settings-leads{margin-top:var(--space-3);padding-left:var(--card-pad-x);padding-right:var(--card-pad-x)}
+.btn{padding:0 var(--space-4)}
+.btn-primary{padding-inline:var(--space-4)}
+.btn.settings-pill{padding:var(--space-3) var(--card-pad-x)}
+.search-input{
+  min-height:52px;
+  padding:0 var(--card-pad-x);
+  border-radius:var(--space-4);
+}
+.route-pad{gap:var(--space-2);margin-top:var(--space-3)}
+.route-pad-row{gap:var(--space-2)}
+.route-pad-key{
+  height:44px;
+  min-height:44px;
+  border-radius:var(--space-3);
+}
+.route-pad-zero{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--space-2);
+}
+.route-pad-zero .route-pad-key{width:100%;max-width:none}
+.route-pad-zero .route-pad-spacer{width:auto;max-width:none}
+.eta-head{
+  margin-bottom:var(--space-3);
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.eta-name{
+  margin:var(--space-1) 0;
+  font-size:1.32rem;
+  font-weight:900;
+  letter-spacing:-.02em;
+  line-height:1.15;
+}
+.eta-list{gap:var(--space-2)}
+.eta-row,
+.eta-next .eta-list .eta-row,
+.eta-list .eta-row{
+  padding:var(--space-3) var(--card-pad-x);
+}
+.eta-dir-panel{padding:var(--space-2) 0}
+.eta-dir-tabs{
+  gap:var(--space-2);
+  margin:0 0 var(--space-2);
+  padding:0 var(--card-pad-x) var(--space-2);
+}
+.eta-dir-tab{min-height:44px;padding:var(--space-2) var(--space-3)}
+.eta-route-bar{margin-top:0;margin-bottom:var(--space-4)}
+.eta-route-bar .route-chips{
+  gap:var(--space-2);
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.eta-route-bar .route-chip{min-height:44px;padding:0 var(--space-3)}
+.eta-route-bar .route-chips.is-dense{max-height:calc(44px * 2 + var(--space-2))}
+.eta-route-q{
+  min-height:44px;
+  margin:0 var(--card-pad-x) var(--space-2);
+  padding:var(--space-2) var(--space-3);
+  width:auto;
+}
+.eta-stale-banner{
+  margin:0 0 var(--space-2);
+  padding:var(--space-2) var(--card-pad-x);
+}
+.eta-skel-note,
+.eta-dir-empty{
+  margin-top:var(--space-2);
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.lrt-plats{gap:var(--space-2)}
+.lrt-plat{padding:var(--space-3) var(--card-pad-x)}
+.rs-panel{margin:0 0 var(--space-4)}
+.rs-bound,.rs-dirs{padding-left:var(--card-pad-x);padding-right:var(--card-pad-x)}
+.rs-dirs{gap:var(--space-2);padding-top:var(--space-3)}
+.rs-dir{min-height:44px;padding:var(--space-1) var(--space-3)}
+.rs-row{padding:var(--space-3) var(--card-pad-x);gap:var(--space-2)}
+.rs-list{margin-top:var(--space-2)}
+.about-block{padding-left:var(--card-pad-x);padding-right:var(--card-pad-x);gap:var(--space-2)}
+.about-name{
+  margin:var(--space-2) 0 0;
+  font-size:1.7rem;
+  letter-spacing:-.03em;
+  line-height:1.1;
+}
+.about-lead{margin:var(--space-2) 0 var(--space-1);line-height:1.45}
+.about-facts{margin-top:var(--space-2);gap:var(--space-3)}
+.alight-block{margin:var(--space-4) 0 var(--space-1)}
+.alight-stop,.alight-dir,.alight-min{min-height:44px;padding:0 var(--space-3)}
+.alight-routes,.alight-dirs,.alight-stops,.alight-mins,.alight-actions{
+  gap:var(--space-2);
+  padding-left:var(--card-pad-x);
+  padding-right:var(--card-pad-x);
+}
+.state{padding:var(--space-8) var(--card-pad-x);gap:var(--space-3)}
+.state.compact{padding:var(--space-5) var(--card-pad-x)}
+#kmb-hint:not(:empty){
+  bottom:calc(var(--mode-bar-h) + var(--space-4) + var(--safe-bottom));
+}
+body:has(.mode-bar) .install-sheet{
+  bottom:calc(var(--mode-bar-h) + var(--space-4) + var(--safe-bottom));
+}
+.nearby-map{margin:0 0 var(--space-3)}
+@media (max-width:380px){
+  .app-shell:has(.eta-tools){padding-bottom:calc(120px + var(--safe-bottom))}
+  .app-shell:has(#eta-arm-note:not([hidden])){padding-bottom:calc(152px + var(--safe-bottom))}
+}
+@media (prefers-reduced-transparency:reduce){
+  .mode-bar,
+  .sw-update,
+  .install-card{
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
+  .mode-bar{background:#0e1418}
+  .mode-bar::before,
+  .topbar::after{display:none}
 }
