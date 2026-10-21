@@ -95,7 +95,7 @@
 .eta-arm-note[hidden]{display:none}
 
 .eta-tools #eta-arm-note{flex:1 0 100%;margin:0;font-size:.78rem}
-.app-shell:has(#eta-arm-note:not([hidden])){padding-bottom:calc(112px + var(--safe-bottom))}
+.app-shell:has(#eta-arm-note:not([hidden])){padding-bottom:calc(148px + var(--safe-bottom))}
 
 @media (max-width: 380px) {
   .app-shell:has(.eta-tools) { padding-bottom: calc(116px + var(--safe-bottom)); }

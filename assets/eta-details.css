@@ -263,7 +263,9 @@
    .mode-bar; if both exist, the refresh bar sits above the tabs and the
    update pill (normally 72px up) moves with them. */
 .app-shell:has(.eta-tools) {
-  padding-bottom: calc(76px + var(--safe-bottom));
+  /* Two rows from 360px through a desktop window (refresh + lead chips,
+     then the reminder). 76px left the footer under the bar. */
+  padding-bottom: calc(120px + var(--safe-bottom));
 }
 .app-shell.has-mode-bar:has(.eta-tools) {
   padding-bottom: calc(148px + var(--safe-bottom));
@@ -295,6 +297,15 @@
   background: rgba(25, 230, 255, 0.16);
   color: #e8fcff;
   font-weight: 700;
+}
+/* The pill used to sit 72px up, which is the mode bar, not this bar.
+   On a stop page it covered 重新整理. Keep it above the refresh row,
+   and above the extra row when the arrival note is open. */
+body:has(.eta-tools) .sw-update {
+  bottom: calc(124px + var(--safe-bottom));
+}
+body:has(#eta-arm-note:not([hidden])) .sw-update {
+  bottom: calc(148px + var(--safe-bottom));
 }
 body:has(.app-shell.has-mode-bar .eta-tools) .sw-update {
   bottom: calc(136px + var(--safe-bottom));

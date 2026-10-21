@@ -21,6 +21,7 @@ assert.ok(bundle.includes('data-route-stops'));
 assert.ok(bundle.includes('data-rs-dir'));
 assert.ok(bundle.includes('data-rs-retry'));
 assert.ok(bundle.includes('rsOpen&&rsEnsure()'));
+assert.ok(bundle.includes('rsRetry&&I&&yt&&(I.type===`kmb`||I.type===`ctb`||I.type===`nlb`||I.type===`gmb`)'));
 assert.ok(!bundle.includes('await rsEnsure'));
 assert.ok(bundle.includes('data-action="share-station"'));
 assert.ok(bundle.includes('data-pin-route'));
@@ -122,5 +123,14 @@ const panel = rsPanelHtml({ status: 'ok', dirs }, 'kmb', '1', current, 'I', reso
 assert.ok(panel.includes('data-rs-dir="I"'));
 assert.ok(panel.includes('往竹園邨'));
 assert.ok(panel.includes('aria-selected="true"'));
+
+const etaCss = fs.readFileSync(path.join(root, 'assets', 'eta-details.css'), 'utf8');
+const shell = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
+assert.ok(etaCss.includes('padding-bottom: calc(120px + var(--safe-bottom));'));
+assert.ok(etaCss.includes('body:has(.eta-tools) .sw-update'));
+assert.ok(etaCss.includes('bottom: calc(124px + var(--safe-bottom));'));
+assert.ok(etaCss.includes('body:has(#eta-arm-note:not([hidden])) .sw-update'));
+assert.ok(shell.includes('padding-bottom:calc(148px + var(--safe-bottom))'));
+assert.ok(!shell.includes('padding-bottom:calc(112px + var(--safe-bottom))'));
 
 console.log('route-stops ok');
