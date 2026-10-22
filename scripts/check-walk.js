@@ -51,6 +51,9 @@ assert.strictEqual(api.walkCopy(40), '步行約 1 分鐘');
 assert.strictEqual(api.walkCopy(80), '步行約 1 分鐘');
 assert.strictEqual(api.walkCopy(200), '步行約 3 分鐘');
 assert.strictEqual(api.walkCopy(400), '步行約 5 分鐘');
+assert.strictEqual(api.walkCopy(30 * 80), '步行約 30 分鐘');
+assert.strictEqual(api.walkCopy(31 * 80), '');
+assert.strictEqual(api.walkCopy(22000), '');
 assert.strictEqual(api.walkCopy(null), '');
 assert.strictEqual(api.walkCopy(Number.NaN), '');
 

@@ -34,6 +34,7 @@ node scripts/check-arrive-notify.js
 node scripts/check-alight.js
 node scripts/check-walk.js
 node scripts/check-leave.js
+node scripts/check-lrt-eta.js
 node scripts/check-settings.js
 node scripts/check-ctb.js
 node scripts/check-nlb.js

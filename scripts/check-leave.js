@@ -203,6 +203,20 @@ assert.ok(src.includes('t&&(paintEta(t,I.type,vt,I));leavePaint();'));
 assert.ok(src.includes('leavePaint();let a=P.querySelector(`#eta-route-q`)'));
 assert.ok(src.includes('i.textContent=r}leavePaint()'), 'a location fix must repaint the hint');
 
+api.setPage('eta');
+api.setStop({ type: 'kmb', meters: 31 * 80, lat: 22.28, lng: 114.15, name_tc: '遠' });
+api.setPos({ lat: 22.39, lng: 113.97 }, 'ok');
+api.setRows([{ route: '1', etaMinutes: 2 }, { route: '751', etaMinutes: null }]);
+api.setRoute(null);
+api.setQuery('');
+assert.strictEqual(api.leaveText(), '');
+api.setStop({ type: 'kmb', meters: 30 * 80, lat: 22.28, lng: 114.15 });
+assert.strictEqual(api.leaveText(), '趕唔切，搭下一班');
+api.setRows([{ route: '751', etaText: '-', etaMinutes: null }, { route: '505', etaMinutes: 4 }]);
+api.setStop({ type: 'lrt', meters: 160, lat: 22.39, lng: 113.97 });
+assert.strictEqual(api.nextEtaMinutes(), 4);
+assert.strictEqual(api.leaveText(), '而家走趕得切');
+
 const details = fs.readFileSync(path.join(root, 'assets', 'eta-details.css'), 'utf8');
 assert.match(details, /\.eta-leave\[hidden\]/);
 assert.match(details, /\.eta-leave\.is-make/);
