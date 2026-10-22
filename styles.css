@@ -769,3 +769,66 @@ body:has(.mode-bar) .install-sheet{
   .mode-bar::before,
   .topbar::after{display:none}
 }
+
+/* Search keypad lives in the thumb zone: the field stays under the
+   header, recent chips / hints / results scroll in the middle, and the
+   pad is the last in-flow row, directly above the mode-bar reserve.
+   That reserve stays --mode-bar-h + safe-area (the pad is not an
+   overlay, so it does not add a second fixed layer). Stop-page
+   120/148/152 reserves are not part of this rule. */
+html:has(.route-pad),
+body:has(.route-pad){
+  height:100%;
+  overflow:hidden;
+}
+.app-shell.has-mode-bar:has(.route-pad){
+  height:100dvh;
+  max-height:100dvh;
+  overflow:hidden;
+  grid-template-rows:auto minmax(0,1fr);
+  padding-bottom:calc(var(--mode-bar-h) + var(--safe-bottom));
+}
+.app-shell:has(.route-pad)>.main{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  overflow:hidden;
+  padding-bottom:0;
+}
+.app-shell:has(.route-pad) .search-panel{
+  flex:none;
+  margin-bottom:var(--space-3);
+}
+.app-shell:has(.route-pad) .search-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+.app-shell:has(.route-pad) #search-results{
+  flex:1 1 auto;
+}
+.app-shell:has(.route-pad) #search-results:has(>.state):not(:has(.search-stops)){
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.app-shell:has(.route-pad) .search-scroll>.footer{
+  flex:none;
+  margin-top:0;
+  padding-left:0;
+  padding-right:0;
+}
+.app-shell:has(.route-pad) .route-pad{
+  flex:none;
+  width:100%;
+  margin-top:0;
+  padding:var(--space-3) 0;
+  border-top:1px solid var(--line);
+  background:#0e1418;
+  position:relative;
+  z-index:4;
+}

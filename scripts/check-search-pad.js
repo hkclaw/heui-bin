@@ -44,10 +44,28 @@ assert.ok(bundle.includes('window.__padCleared=!0,$d(``,{saveRecent:!1})'));
 assert.ok(bundle.includes('r===`backspace`&&window.__padCleared'));
 assert.ok(bundle.includes('t.setPointerCapture(e.pointerId)'));
 
+const bt = bundle.slice(bundle.indexOf('function Bt('), bundle.indexOf('function recentEmpty('));
+assert.ok(bt.includes('class="search-scroll" id="search-scroll"'));
+assert.ok(bt.includes('id="recent-host"'));
+assert.ok(bt.includes('id="search-results"'));
+const scrollAt = bt.indexOf('search-scroll');
+const resultsAt = bt.indexOf('id="search-results"');
+const padAt = bt.lastIndexOf('${Lt()}');
+assert.ok(scrollAt > 0 && resultsAt > scrollAt && padAt > resultsAt, 'keypad must follow the scroll region');
+assert.ok(!bt.includes('<div id="recent-host">${Rt()}</div>\n      ${Lt()}'));
+assert.ok(bt.includes('s.appendChild(f)'));
+
 for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('.route-pad-zero .route-pad-spacer{flex:0 0 calc(33.3333% - 2.66667px)'));
   assert.ok(sheet.includes('.route-pad-delete{font-size:1.1rem'));
   assert.ok(sheet.includes('.route-pad-key{border:1px solid var(--line)'));
+  assert.ok(sheet.includes('.app-shell.has-mode-bar:has(.route-pad){'));
+  assert.ok(sheet.includes('padding-bottom:calc(var(--mode-bar-h) + var(--safe-bottom))'));
+  assert.ok(sheet.includes('.app-shell:has(.route-pad) .search-scroll{'));
+  assert.ok(sheet.includes('.app-shell:has(.route-pad) .route-pad{'));
+  assert.ok(sheet.includes('min-height:44px'));
+  assert.ok(sheet.includes('padding-bottom:calc(120px + var(--safe-bottom))'));
+  assert.ok(sheet.includes('padding-bottom:calc(152px + var(--safe-bottom))'));
 }
 
 console.log('search pad delete ok');
