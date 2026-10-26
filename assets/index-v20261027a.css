@@ -890,8 +890,25 @@ body{
 .alight-stop[aria-selected="true"],
 .alight-dir[aria-pressed="true"],
 .eta-route-all.eta-pin.on,
-.eta-arm.on{
+.eta-arm.on,
+.arm-lead.on,
+.arm-lead[aria-pressed="true"]{
   color:var(--ink);
   background:#ffffff10;
   border-color:#d5dee2;
+}
+.stop-card .stop-bound,
+.eta-head .stop-bound{
+  color:var(--muted);
+}
+.settings-act-danger{
+  color:#f0c2cc;
+  background:transparent;
+  border-color:#c47b8c;
+}
+
+.eta-route-all{
+  color:var(--ink);
+  background:#ffffff0a;
+  border-color:#ffffff2e;
 }
