@@ -833,11 +833,12 @@ body:has(.route-pad){
   z-index:4;
 }
 
-/* utilitarian-chrome: selection stays obvious, the rest stays flat.
-   Spacing tokens, 16px gutters, safe-area, the thumb-zone keypad, and
-   the stop-page 120/148/152 reserves are unchanged above. The header
-   stays opaque. The mode bar keeps its light blur. Glow variables are
-   cleared so a leftover halo cannot paint. */
+/* hk-neon: restrained Nathan Road night street on the quiet base.
+   Soft cyan and magenta corner blooms, plus a signboard glow on the
+   nearest stop, the active mode, and the selected route. Spacing,
+   gutters, the thumb-zone keypad, stop clearances, and the opaque
+   header stay as they are. ETA rows stay flat so the minutes stay
+   the hero. Glow variables stay none so a leftover halo cannot paint. */
 :root{
   --glow-cyan:none;
   --glow-magenta:none;
@@ -845,37 +846,57 @@ body:has(.route-pad){
 }
 body{
   background-color:#0e1418;
-  background-image:none;
+  background-image:
+    radial-gradient(920px 520px at -4% -8%, #19e6ff2b, #0000 58%),
+    radial-gradient(840px 480px at 106% -6%, #ff2bd622, #0000 54%),
+    linear-gradient(#121a20 0%, #0e1418 46%, #0c1216 100%);
+  background-attachment:fixed;
 }
-.heui-bin-splash{background-color:#0e1418;background-image:none}
-.heui-bin-trace-cyan,
-.heui-bin-trace-magenta{stroke:#c5d0d6;filter:none}
+.heui-bin-splash{
+  background-color:#0e1418;
+  background-image:
+    radial-gradient(700px 420px at 16% 26%, #19e6ff2e, #0000 56%),
+    radial-gradient(640px 400px at 86% 74%, #ff2bd624, #0000 52%);
+}
+.heui-bin-trace-cyan{
+  stroke:#19e6ff;
+  filter:drop-shadow(0 0 4px #19e6ff99) drop-shadow(0 0 12px #19e6ff40);
+}
+.heui-bin-trace-magenta{
+  stroke:#ff2bd6;
+  filter:drop-shadow(0 0 4px #ff2bd699) drop-shadow(0 0 12px #ff2bd640);
+}
 .stop-card,
 .settings-item{background:#ffffff0a}
 .nearby-list:not(.nearby-skel)>li:first-child .stop-card{
-  border-color:#d5dee2;
-  background:#ffffff10;
-  box-shadow:none;
+  border-color:#19e6ffd0;
+  background:#10181c;
+  box-shadow:0 0 10px #19e6ff66, 0 0 22px #19e6ff2e;
 }
 .mode-chip-lrt.on,
 .mode-chip-kmb.on,
-.mode-chip-mtr.on,
-.mode-chip-tml.on,
 .mode-chip-bus.on{
-  color:var(--ink);
-  background:#1b262c;
-  border-color:#d5dee2;
-  box-shadow:none;
+  color:#e7fbff;
+  background:#0c1a20;
+  border-color:#19e6ff;
+  box-shadow:0 0 6px #19e6ffb3, 0 0 14px #19e6ff40;
+}
+.mode-chip-mtr.on,
+.mode-chip-tml.on{
+  color:#ffe6f7;
+  background:#1a1016;
+  border-color:#ff2bd6;
+  box-shadow:0 0 6px #ff2bd6b3, 0 0 14px #ff2bd640;
 }
 .eta-route-bar .route-chip.on,
 .route-chip.on,
 .rs-dir.on,
 .eta-route-all.eta-stops.on,
 .lrt-fast{
-  color:#0e1418;
-  background:#e4eaec;
-  border-color:#e4eaec;
-  box-shadow:none;
+  color:#041820;
+  background:#3eecff;
+  border-color:#b8fbff;
+  box-shadow:0 0 8px #19e6ffcc, 0 0 16px #19e6ff55;
 }
 .eta-dir-tab.on{
   color:var(--ink);
@@ -896,9 +917,9 @@ body{
   background:#ffffff0a;
   box-shadow:none;
 }
-.rs-row.is-here{background:#ffffff0c;box-shadow:inset 3px 0 0 #c5d4dc}
-.rs-here{color:var(--ink)}
-.search-input:focus{border-color:#d5dee2;box-shadow:none}
+.rs-row.is-here{background:#19e6ff12;box-shadow:inset 3px 0 0 #19e6ff}
+.rs-here{color:#8eebff}
+.search-input:focus{border-color:#19e6ff99;box-shadow:0 0 0 3px #19e6ff1f}
 .recent-chip{border-color:#ffffff2e;background:#ffffff0a}
 .route-pad-letters .route-pad-key{color:var(--ink);border-color:var(--line)}
 .btn-primary{
@@ -953,4 +974,13 @@ body{
   color:var(--ink);
   background:#ffffff0a;
   border-color:#ffffff2e;
+}
+@media (prefers-reduced-transparency:reduce){
+  body,
+  .heui-bin-splash{
+    background-color:#0e1418;
+    background-image:none;
+  }
+  .heui-bin-trace-cyan,
+  .heui-bin-trace-magenta{filter:none}
 }
