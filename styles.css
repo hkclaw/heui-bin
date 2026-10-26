@@ -832,3 +832,109 @@ body:has(.route-pad){
   position:relative;
   z-index:4;
 }
+
+/* utilitarian-chrome: selection stays obvious, the rest stays flat.
+   Spacing tokens, 16px gutters, safe-area, the thumb-zone keypad, and
+   the stop-page 120/148/152 reserves are unchanged above. The header
+   stays opaque. The mode bar keeps its light blur. Glow variables are
+   cleared so a leftover halo cannot paint. */
+:root{
+  --glow-cyan:none;
+  --glow-magenta:none;
+  --glow-mag:none;
+}
+body{
+  background-color:#0e1418;
+  background-image:none;
+}
+.heui-bin-splash{background-color:#0e1418;background-image:none}
+.heui-bin-trace-cyan,
+.heui-bin-trace-magenta{stroke:#c5d0d6;filter:none}
+.stop-card,
+.settings-item{background:#ffffff0a}
+.nearby-list:not(.nearby-skel)>li:first-child .stop-card{
+  border-color:#d5dee2;
+  background:#ffffff10;
+  box-shadow:none;
+}
+.mode-chip-lrt.on,
+.mode-chip-kmb.on,
+.mode-chip-mtr.on,
+.mode-chip-tml.on,
+.mode-chip-bus.on{
+  color:var(--ink);
+  background:#1b262c;
+  border-color:#d5dee2;
+  box-shadow:none;
+}
+.eta-route-bar .route-chip.on,
+.route-chip.on,
+.rs-dir.on,
+.eta-route-all.eta-stops.on,
+.lrt-fast{
+  color:#0e1418;
+  background:#e4eaec;
+  border-color:#e4eaec;
+  box-shadow:none;
+}
+.eta-dir-tab.on{
+  color:var(--ink);
+  background:#1b262c;
+  border-color:#d5dee2;
+  box-shadow:none;
+}
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row){
+  border-color:#9aafb6;
+  background:#ffffff0c;
+  box-shadow:none;
+}
+.lrt-plat.is-fastest{
+  border-color:#9aafb6;
+  background:#ffffff0a;
+  box-shadow:none;
+}
+.rs-row.is-here{background:#ffffff0c;box-shadow:inset 3px 0 0 #c5d4dc}
+.rs-here{color:var(--ink)}
+.search-input:focus{border-color:#d5dee2;box-shadow:none}
+.recent-chip{border-color:#ffffff2e;background:#ffffff0a}
+.route-pad-letters .route-pad-key{color:var(--ink);border-color:var(--line)}
+.btn-primary{
+  color:var(--ink);
+  background:#1b262c;
+  border-color:#9aafb6;
+  box-shadow:none;
+}
+.star-btn.on,
+.star-btn.top.on{color:#d9c48a;text-shadow:none}
+.chip-kmb,
+.chip-lrt{border-color:#6e8f98}
+.chip-mtr,
+.chip-tml{border-color:#8f7386}
+.chip-ctb{border-color:#9a8b62}
+.chip-nlb{border-color:#5f8f7c}
+.chip-gmb{color:#c5d0bc;border-color:#8a9468}
+.install-card,
+.sw-update{
+  border-color:var(--line);
+  background:#121a1e;
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+.sw-update{color:var(--ink)}
+.sw-update .sw-dot{background:#c5d4dc;box-shadow:none}
+.install-kicker{color:var(--muted)}
+.app-shell .eta-tools{box-shadow:none}
+.alight-stop.on,
+.alight-dir.on,
+.alight-stop[aria-selected="true"],
+.alight-dir[aria-pressed="true"],
+.eta-route-all.eta-pin.on,
+.eta-arm.on{
+  color:var(--ink);
+  background:#ffffff10;
+  border-color:#d5dee2;
+}
