@@ -60,6 +60,19 @@ assert.strictEqual(api.walkCopy(Number.NaN), '');
 const stop = { lat: 22.28181, lng: 114.15722, name_tc: '中環' };
 assert.strictEqual(api.walkHtml({ name_tc: '海皇路' }), '');
 
+// Station 250 was renamed 海皇路 and shipped without a point, so nearby
+// ranking skipped it and the stop page had no walk line or Maps link.
+const lrtStations = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'lrt-stations.json'), 'utf8'));
+const hoiWong = lrtStations.find((s) => s.id === '250');
+assert.ok(hoiWong, '海皇路 station record');
+assert.strictEqual(hoiWong.lat, 22.3811);
+assert.strictEqual(hoiWong.lng, 113.9705);
+assert.ok(src.includes('"id":"250","code":"TSP","name_tc":"海皇路","name_en":"Hoi Wong Road","bound_tc":"往屯門碼頭","lat":22.3811,"lng":113.9705'));
+const hoiHtml = api.walkHtml(hoiWong);
+assert.match(hoiHtml, /eta-walk-map/);
+assert.match(hoiHtml, /destination=22\.381100,113\.970500/);
+assert.match(hoiHtml, />步行路線</);
+
 api.set(null, 'denied');
 const denied = api.walkHtml(stop);
 assert.ok(!denied.includes('eta-walk-mins'), 'minutes stay hidden without a fix');
