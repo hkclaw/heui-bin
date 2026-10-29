@@ -123,9 +123,37 @@ assert.strictEqual(sameName.length, 2);
 assert.notStrictEqual(sameName[0].id, sameName[1].id);
 const merged = ue([
   { type: 'kmb', id: 'a', name_tc: '摩士公園', name_en: 'Morse Park', routes: ['1'], lat: 22.1, lng: 114.1, bound_tc: '往尖沙咀' },
-  { type: 'kmb', id: 'b', name_tc: '摩士公園', name_en: 'Morse Park', routes: ['2'], lat: 22.11, lng: 114.11, bound_tc: '往觀塘' },
+  { type: 'kmb', id: 'b', name_tc: '摩士公園 (對面)', name_en: 'Morse Park', routes: ['2'], lat: 22.1004, lng: 114.1, bound_tc: '往觀塘' },
 ]);
 assert.strictEqual(merged.length, 1);
 assert.deepStrictEqual(merged[0].memberIds.slice().sort(), ['a', 'b']);
+
+// Same display name in two districts used to become one card: the pin sat
+// between them and the ETA mixed both places. Opposite poles still merge.
+const distant = ue([
+  { type: 'kmb', id: 'yl1', name_tc: '水邊村 (YL259)', name_en: 'SHUI PIN TSUEN', routes: ['68'], lat: 22.444444, lng: 114.021349, bound_tc: '往荃灣' },
+  { type: 'kmb', id: 'yl2', name_tc: '水邊村 (YL260)', name_en: 'SHUI PIN TSUEN', routes: ['69'], lat: 22.444568, lng: 114.02114, bound_tc: '往機場' },
+  { type: 'kmb', id: 'tk1', name_tc: '水邊村 (TK262)', name_en: 'SHUI BIN TSUEN', routes: ['91'], lat: 22.321383, lng: 114.268881, bound_tc: '往鑽石山站' },
+  { type: 'kmb', id: 'tk2', name_tc: '水邊村 (TK275)', name_en: 'SHUI BIN TSUEN', routes: ['98'], lat: 22.321881, lng: 114.26906, bound_tc: '往寶林' },
+]);
+assert.strictEqual(distant.length, 2);
+assert.deepStrictEqual(distant[0].memberIds.slice().sort(), ['yl1', 'yl2']);
+assert.deepStrictEqual(distant[1].memberIds.slice().sort(), ['tk1', 'tk2']);
+assert.ok(Math.abs(distant[0].lat - 22.4445) < 0.001);
+assert.ok(Math.abs(distant[1].lat - 22.3216) < 0.001);
+assert.ok(!distant[0].routes.includes('91'));
+assert.ok(!distant[1].routes.includes('68'));
+
+const eStart = bundle.indexOf('function E(e,t,n){');
+const eEnd = bundle.indexOf('var D=`Asia/Hong_Kong`');
+assert.ok(eStart > ueEnd && eEnd > eStart);
+const { E } = new Function(`${bundle.slice(ueStart, ueEnd)}${bundle.slice(eStart, eEnd)} return { E };`)();
+const raw = [
+  { type: 'kmb', id: 'yl1', name_tc: '水邊村 (YL259)', lat: 22.444444, lng: 114.021349 },
+  { type: 'kmb', id: 'tk1', name_tc: '水邊村 (TK262)', lat: 22.321383, lng: 114.268881 },
+];
+const looked = E(raw, 'kmb', 'tk1');
+assert.deepStrictEqual(looked.memberIds, ['tk1']);
+assert.ok(looked.lat < 22.4, 'opening the Tai Po pole must not resolve to the Yuen Long card');
 
 console.log(`gmb ok (${stops.length} stops, ${withCoord} with coordinates)`);
