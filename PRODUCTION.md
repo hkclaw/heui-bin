@@ -2,6 +2,8 @@
 
 Checked 2026-10-18 against this repository and the live hosts. This file is the runbook.
 
+The snapshot in this repository is `v20261029b`. The measurements below are the 2026-10-18 check and stay as that day's record.
+
 As of 2026-10-18 13:01 UTC, `https://heuibin.codecoffee.online/rev.txt` and `https://tap-eta-hk.surge.sh/rev.txt` both return `v20260827q`. The custom-hostname certificate is `CN=heuibin.codecoffee.online`, notAfter 16 January 2027. Plain `http://heuibin.codecoffee.online/rev.txt` still returns 200, so `--force https` has not been applied. Pushes to `main` publish through `.github/workflows/ci.yml` after the `SURGE_TOKEN` repository secret exists.
 
 Brand spelling is `heuibin`. The share name is 去邊.

@@ -23,7 +23,7 @@ assert.strictEqual(padApply('99', '0'), '990');
 
 const html = Lt();
 const rows = html.split('route-pad-row').slice(1);
-assert.strictEqual(rows.length, 5);
+assert.strictEqual(rows.length, 6);
 assert.ok(rows[3].includes('route-pad-zero'));
 assert.ok(rows[3].includes('route-pad-spacer'));
 assert.ok(rows[3].includes('data-pad-key="0"'));
@@ -37,6 +37,14 @@ for (const letter of ['C', 'D', 'X', 'M', 'P']) {
   assert.ok(rows[4].includes('route-pad-letters'));
 }
 assert.ok(!rows[4].includes('backspace'));
+for (const letter of ['A', 'N', 'E', 'S', 'B', 'K', 'R']) {
+  assert.ok(rows[5].includes(`data-pad-key="${letter}"`));
+  assert.ok(rows[5].includes('route-pad-letters'));
+}
+assert.ok(bundle.includes('shown=n||t.length<=1?t:t.slice(0,5)'));
+assert.ok(bundle.includes('extra=!n&&t.length>5?t.slice(5):[]'));
+assert.ok(bundle.includes('「${n}」底下'));
+assert.ok(bundle.includes('if(St===`ok`&&R)a.sort'));
 assert.ok(bundle.includes('inputmode="text"'));
 assert.ok(bundle.includes('id="q"'));
 assert.ok(bundle.includes('let i=padApply(t.value,r)'));

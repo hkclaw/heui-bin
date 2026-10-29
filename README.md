@@ -4,7 +4,7 @@
 
 Hong Kong commute PWA. Open it on a phone and the next bus or train is already on the screen.
 
-It is for a commute you already know: KMB and LWB stops, MTR Light Rail (including the stops along a route), and MTR heavy rail, including the Tuen Ma Line. The UI is Cantonese (`zh-Hant-HK`). Saved stops stay on the phone. Location is used only to list nearby stops, and it is not uploaded. The footer credits 運輸署, 港鐵, and 九巴.
+It is for a commute you already know: KMB and LWB, Citybus, New Lantao Bus, green minibuses, MTR Light Rail (including the stops along a route), and MTR heavy rail, including the Tuen Ma Line. The UI is Cantonese (`zh-Hant-HK`). Saved stops stay on the phone. Location is used only to list nearby stops, and it is not uploaded. The footer credits 運輸署, 港鐵, and 九巴.
 
 The site is static. The phone is the runtime: it calls the KMB and MTR open-data APIs itself, and Surge only serves the files. The share spelling is `heuibin`. The product name is 去邊.
 
@@ -21,7 +21,7 @@ The site is static. The phone is the runtime: it calls the KMB and MTR open-data
 | Surge hostname | https://tap-eta-hk.surge.sh |
 | Custom domain on Surge Free | https://heuibin.codecoffee.online |
 
-Both hosts serve the revision in [`rev.txt`](rev.txt) (currently `v20260827q`). Each origin keeps its own favorites.
+Both hosts serve the revision in [`rev.txt`](rev.txt) (currently `v20261029b`). Each origin keeps its own favorites.
 
 `http://heuibin.codecoffee.online` still serves the same files. Install the PWA from the `https://` URL. Certificate status and the phone checklist are in [PRODUCTION.md](PRODUCTION.md).
 
@@ -113,14 +113,14 @@ Inside `sw.js`, navigations, `/index.html`, `/rev.txt`, `/sw.js`, `/registerSW.j
 
 On 2026-10-18 both hosts answered those URLs with `public, max-age=0, must-revalidate` and an ETag. That still revalidates. A long `max-age` without `no-cache` or `must-revalidate` would pin an old `sw.js`, and the update banner would not appear. The accepted variants are in [PRODUCTION.md](PRODUCTION.md) under “Cache-header invariants”.
 
-ETA responses are cached in the worker for 60 seconds (`NetworkFirst` on `data.etabus.gov.hk` and `rt.data.gov.hk`). A stop page also polls every 20 seconds.
+Operator ETA responses are not stored by the worker (`NetworkOnly` on `data.etabus.gov.hk`, `rt.data.gov.hk`, and `data.etagmb.gov.hk`). A stop page polls every 20 seconds.
 
 ## Layout
 
 | Path | Role |
 |---|---|
 | `index.html` | Shell, revision meta, service-worker registration, update banner |
-| `assets/index-<rev>.js`, `assets/index-<rev>.css` | App bundle for that revision. The current files are `assets/index-v20260827q.*` |
+| `assets/index-<rev>.js`, `assets/index-<rev>.css` | App bundle for that revision. The current files are `assets/index-v20261029b.*` |
 | `assets/eta-details.css`, `styles.css` | Detail layout and first-paint styles |
 | `sw.js`, `workbox-4a6fc131.js` | Workbox 7.4.0 service worker |
 | `registerSW.js` | Same banner logic; still part of the cache contract |
