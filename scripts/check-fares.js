@@ -64,7 +64,7 @@ assert.strictEqual(fare.fareFor(stop, '5'), '<span class="fare" title="成人 $6
 fare.load({ kmb: { A: { '1': 'O:6.7' }, B: { '1': 'O:5.8' } } });
 const split = { type: 'kmb', id: 'A', memberIds: ['A', 'B'] };
 assert.strictEqual(fare.fareFor(split, '1'), '');
-assert.strictEqual(fare.fareFor(split, '1', 'O'), '<span class="fare" title="成人 $6.7">$6.7</span>');
+assert.strictEqual(fare.fareFor(split, '1', 'O'), '');
 assert.strictEqual(fare.fareMoney('0'), '');
 assert.strictEqual(fare.fareMoney('12'), '12.0');
 

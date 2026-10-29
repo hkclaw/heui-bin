@@ -101,4 +101,20 @@ assert.ok(bundle.includes('rows:[...t].sort(lrtOrder)'));
 assert.ok(!bundle.includes('||i===`-`?a=0'));
 assert.ok(!bundle.includes('i===`-`?a=0'));
 
+const lrtStart = bundle.indexOf('function $L(');
+const lrtEnd = bundle.indexOf('function lrtMinutes(');
+assert.ok(lrtStart >= 0 && lrtEnd > lrtStart);
+const { $L } = new Function('$n', `${bundle.slice(lrtStart, lrtEnd)} return { $L };`)({
+  '610': [
+    { dest: '屯門碼頭', stops: [{ id: '10', name: '美樂' }, { id: '30', name: '屯門碼頭' }] },
+    { dest: '元朗', stops: [{ id: '10', name: '美樂' }, { id: '20', name: '蝴蝶' }] },
+  ],
+  '505': [
+    { dest: '三聖', stops: [{ id: '8', name: '兆康' }, { id: '9', name: '屯門' }, { id: '12', name: '三聖' }] },
+  ],
+});
+assert.strictEqual($L('10', '610', '屯門碼頭'), '');
+assert.strictEqual($L('10', '610', '元朗'), '蝴蝶');
+assert.strictEqual($L('8', '505', '三聖'), '屯門');
+
 console.log('lrt eta ok');

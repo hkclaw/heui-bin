@@ -106,6 +106,21 @@ assert.ok(Math.abs(pin.lat - 22.42906) < 1e-9, 'directions use the nearer exit')
 assert.match(api.mapsHref(exits), /destination=22\.429060,114\.243870/);
 assert.match(api.walkHtml(exits), /步行少於 1 分鐘/);
 
+const poles = {
+  lat: 22.5,
+  lng: 114.5,
+  poles: [
+    { lat: 22.28, lng: 114.15, id: 'a' },
+    { lat: 22.29, lng: 114.16, id: 'b' },
+  ],
+};
+api.set(null, 'denied');
+const parked = api.walkPoint(poles, null);
+assert.ok(Math.abs(parked.lat - 22.28) < 1e-9, 'without a fix, directions use a real pole');
+api.set({ lat: 22.291, lng: 114.161 }, 'ok');
+const nearerPole = api.walkPoint(poles, { lat: 22.291, lng: 114.161 });
+assert.ok(Math.abs(nearerPole.lat - 22.29) < 1e-9, 'with a fix, directions use the nearer pole');
+
 const bundleHasUi = src.includes('${walkHtml(n)}') && src.includes('z?walkPaint():Dt()');
 assert.ok(bundleHasUi, 'ETA header must render the walk row without waiting on it');
 assert.ok(src.includes('walkPaint()'), 'a later location fix must fill in the minutes');

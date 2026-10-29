@@ -24,6 +24,8 @@ grep -q "/assets/index-${rev}.css" index.html
 test -f "assets/index-${rev}.js"
 test -f "assets/index-${rev}.css"
 grep -q "$rev" sw.js
+grep -F -q "/sw.js?rev=$rev" registerSW.js
+grep -q "searchParams.set(\`v\`,\`$rev\`)" "assets/index-${rev}.js"
 test -f assets/arrive-notify.js
 grep -q "/assets/arrive-notify.js" index.html
 grep -q "assets/arrive-notify.js" sw.js
@@ -41,6 +43,7 @@ node scripts/check-nlb.js
 node scripts/check-gmb.js
 node scripts/check-bus-filter.js
 node scripts/check-fares.js
+node scripts/check-catalogue.js
 node scripts/check-nearby-rank.js
 node scripts/check-home-layout.js
 node scripts/check-route-stops.js

@@ -155,5 +155,16 @@ const raw = [
 const looked = E(raw, 'kmb', 'tk1');
 assert.deepStrictEqual(looked.memberIds, ['tk1']);
 assert.ok(looked.lat < 22.4, 'opening the Tai Po pole must not resolve to the Yuen Long card');
+assert.strictEqual(merged[0].poles.length, 2);
+assert.deepStrictEqual(merged[0].poles.map((pole) => pole.id).sort(), ['a', 'b']);
+assert.strictEqual(distant[0].poles.length, 2);
+assert.strictEqual(distant[1].poles.length, 2);
+
+const estates = ue([
+  { type: 'lrt', id: '100', name_tc: '大興(北)', name_en: 'Tai Hing (North)', routes: ['610'], lat: 22.4, lng: 113.97 },
+  { type: 'lrt', id: '101', name_tc: '大興(南)', name_en: 'Tai Hing (South)', routes: ['610'], lat: 22.4002, lng: 113.97 },
+]);
+assert.strictEqual(estates.length, 2);
+assert.notStrictEqual(estates[0].id, estates[1].id);
 
 console.log(`gmb ok (${stops.length} stops, ${withCoord} with coordinates)`);

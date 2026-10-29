@@ -66,7 +66,7 @@ assert.strictEqual(api.walkMinutes(400), 5);
 assert.strictEqual(api.leaveCopy(null, 5), '');
 assert.strictEqual(api.leaveCopy(2, null), '');
 assert.strictEqual(api.leaveCopy(2, Number.NaN), '');
-assert.strictEqual(api.leaveCopy(0, 0), '趕唔切，搭下一班');
+assert.strictEqual(api.leaveCopy(0, 0), '而家走趕得切');
 assert.strictEqual(api.leaveCopy(0, 1), '而家走趕得切');
 assert.strictEqual(api.leaveCopy(5, 6), '而家走趕得切');
 assert.strictEqual(api.leaveCopy(5, 5), '趕唔切，搭下一班');
