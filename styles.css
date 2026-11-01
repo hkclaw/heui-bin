@@ -989,3 +989,331 @@ button.stop-card-hit{font:inherit;color:inherit;text-align:left;background:none;
 .stop-card:has(.stop-card-hit){flex-wrap:wrap;align-items:stretch}
 .stop-card:has(.list-route-chips) .list-route-chips{flex:1 0 100%}
 button.list-route-chip{font:inherit;cursor:pointer;color:var(--muted)}
+
+/* street-craft: asphalt, four LED ink levels, neon only on the signboard.
+   Builds on --space-* and the quiet ETA rows. Does not move the hero
+   countdown, the stale amber, or the ghost-row ink. */
+:root{
+  --ink-primary:#f2f6f8;
+  --ink-secondary:#c5d4dc;
+  --ink-muted:#8fa0a8;
+  --ink-faint:#788086;
+  --surface-0:#0e1418;
+  --surface-1:#121a20;
+  --surface-2:#182228;
+  --surface-deep:#0c1216;
+  --surface-card:#ffffff0a;
+  --surface-inset:#ffffff08;
+  --line-strong:#ffffff24;
+  --neon-cyan:#19e6ff;
+  --neon-magenta:#ff2bd6;
+  --streetlight:#f0c14b;
+  --streetlight-ink:#f3ddb0;
+  --pin:#d9c48a;
+  --plate:#3eecff;
+  --plate-ink:#041820;
+  --plate-edge:#b8fbff;
+  --mode-cyan-well:#0c1a20;
+  --mode-magenta-well:#1a1016;
+  --op-nlb:#3ddc97;
+  --op-gmb:#c6d96a;
+  --sign-cyan:0 0 10px #19e6ff66, 0 0 22px #19e6ff2e;
+  --sign-magenta:0 0 6px #ff2bd6b3, 0 0 14px #ff2bd640;
+  --sign-plate:0 0 8px #19e6ff99, 0 0 16px #19e6ff38;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:var(--radius);
+  --text:var(--ink-primary);
+  --ink:var(--ink-primary);
+  --muted:var(--ink-muted);
+  --bg:var(--surface-0);
+  --bg0:var(--surface-0);
+  --bg1:var(--surface-1);
+  --cyan:var(--neon-cyan);
+  --magenta:var(--neon-magenta);
+  --accent:var(--neon-cyan);
+  --accent-2:var(--neon-magenta);
+  color-scheme:dark;
+  font-family:system-ui,"PingFang HK","Noto Sans TC","Noto Sans CJK TC",sans-serif;
+  line-height:1.5;
+}
+body{
+  background-color:var(--surface-0);
+  background-image:
+    radial-gradient(920px 520px at -4% -8%, color-mix(in srgb, var(--neon-cyan) 16%, transparent), transparent 58%),
+    radial-gradient(840px 480px at 106% -6%, color-mix(in srgb, var(--neon-magenta) 12%, transparent), transparent 54%),
+    linear-gradient(var(--surface-1) 0%, var(--surface-0) 46%, var(--surface-deep) 100%);
+  font-family:inherit;
+}
+button,input{font-family:inherit}
+
+.section-label,
+.eta-name,
+.stop-name{color:var(--ink-primary);text-wrap:balance}
+.fav-block .section-label,
+.pin-block .section-label,
+.eta-route-bar .section-label,
+.eta-next .section-label,
+.recent-label,
+.about-facts dt{
+  color:var(--ink-faint);
+  font-weight:600;
+}
+.nearby-block>.section-label,
+.search-stops>.section-label{
+  color:var(--ink-primary);
+  font-weight:800;
+}
+.stop-name{font-weight:700}
+.eta-name{font-weight:900}
+.page-title{margin-top:var(--space-1)}
+.stop-en,
+.eta-plat,
+.eta-rmk,
+.hint,
+.footer,
+.eta-route-hint,
+.about-en{
+  color:var(--ink-muted);
+  font-weight:400;
+}
+.hint,
+.footer,
+.eta-plat,
+.eta-rmk,
+.about-lead,
+.eta-route-hint{text-wrap:pretty}
+.eta-head .stop-bound,
+.nearby-list:not(.nearby-skel)>li:first-child .stop-bound,
+.eta-next .eta-list .eta-dest,
+.eta-dest{
+  color:var(--ink-secondary);
+  font-weight:500;
+}
+.nearby-list:not(.nearby-skel)>li:not(:first-child) .stop-bound,
+.fav-block .fav-live-card .stop-bound{
+  color:var(--ink-muted);
+  font-weight:500;
+}
+.eta-walk{margin-top:var(--space-2);gap:var(--space-2) var(--space-3)}
+.eta-walk-mins{
+  color:var(--ink-secondary);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+.eta-leave{color:var(--ink-muted);font-weight:500}
+.eta-leave.is-make{color:var(--neon-cyan);font-weight:700}
+.eta-leave.is-miss{color:var(--danger);font-weight:700}
+.eta-time,
+.eta-mins,
+.fav-eta-mins,
+.eta-dir-tab-eta,
+.stop-dist,
+.fare,
+.rs-seq,
+.eta-walk-mins{font-variant-numeric:tabular-nums}
+.eta-next .eta-list .eta-route,
+.eta-dir-panel .eta-list .eta-route,
+.lrt-plat .eta-list .eta-route{
+  color:var(--ink-muted);
+  font-size:1rem;
+  font-weight:600;
+}
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-route,
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-route,
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-route{
+  color:var(--ink-primary);
+  font-weight:800;
+}
+
+.nearby-list{gap:0}
+.nearby-list.nearby-skel{gap:var(--space-2)}
+.nearby-list .stop-card{
+  background:transparent;
+  border-color:transparent;
+  border-radius:0;
+  box-shadow:none;
+  border-bottom:1px solid var(--line);
+}
+.nearby-list.nearby-skel .stop-card,
+.nearby-skel-card{
+  background:var(--surface-card);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+}
+.nearby-list:not(.nearby-skel)>li:first-child{margin-bottom:var(--space-3)}
+.nearby-list:not(.nearby-skel)>li:first-child .stop-card{
+  border:1px solid color-mix(in srgb, var(--neon-cyan) 78%, transparent);
+  border-radius:var(--radius-lg);
+  background:var(--surface-1);
+  box-shadow:var(--sign-cyan);
+}
+.nearby-list:not(.nearby-skel)>li:first-child .stop-name{font-weight:800}
+.fav-block .fav-live-card,
+.settings-item,
+.search-stops .stop-card,
+.pin-card{
+  background:var(--surface-card);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+.hero-brand{
+  background:none;
+  color:var(--ink-primary);
+  -webkit-text-fill-color:var(--ink-primary);
+}
+
+.mode-chip{font-weight:600;color:var(--ink-muted)}
+.mode-chip-lrt.on,
+.mode-chip-kmb.on,
+.mode-chip-bus.on{
+  color:var(--ink-primary);
+  font-weight:800;
+  background:var(--mode-cyan-well);
+  border-color:var(--neon-cyan);
+  box-shadow:var(--sign-cyan);
+}
+.mode-chip-mtr.on,
+.mode-chip-tml.on{
+  color:var(--ink-primary);
+  font-weight:800;
+  background:var(--mode-magenta-well);
+  border-color:var(--neon-magenta);
+  box-shadow:var(--sign-magenta);
+}
+.eta-route-bar .route-chip.on,
+.route-chip.on{
+  color:var(--plate-ink);
+  background:var(--plate);
+  border-color:var(--plate-edge);
+  box-shadow:var(--sign-plate);
+  font-weight:800;
+}
+.rs-dir.on,
+.eta-route-all.eta-stops.on{
+  color:var(--ink-primary);
+  background:var(--surface-2);
+  border-color:var(--line-strong);
+  box-shadow:none;
+}
+.lrt-fast{
+  color:var(--plate-ink);
+  background:var(--neon-cyan);
+  border-color:var(--neon-cyan);
+  box-shadow:none;
+}
+.eta-row,
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row),
+.eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row){
+  background:var(--surface-inset);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+.lrt-plat.is-fastest{
+  background:var(--surface-card);
+  border-color:var(--line-strong);
+  box-shadow:none;
+}
+.chip{
+  color:var(--ink-secondary);
+  background:var(--surface-card);
+  font-weight:700;
+}
+.chip-kmb,
+.chip-lrt{border-color:color-mix(in srgb, var(--neon-cyan) 42%, var(--line))}
+.chip-mtr,
+.chip-tml{border-color:color-mix(in srgb, var(--neon-magenta) 42%, var(--line))}
+.chip-ctb{border-color:color-mix(in srgb, var(--streetlight) 55%, var(--line))}
+.chip-nlb{border-color:color-mix(in srgb, var(--op-nlb) 45%, var(--line))}
+.chip-gmb{color:var(--ink-secondary);border-color:color-mix(in srgb, var(--op-gmb) 42%, var(--line))}
+.list-route-chip{
+  min-height:44px;
+  padding:0 var(--space-3);
+  color:var(--ink-muted);
+}
+.list-route-chips{gap:var(--space-2)}
+.arm-lead{min-width:44px;min-height:44px}
+.eta-walk-map{min-height:44px;padding:0 var(--space-2)}
+.arrive-install{min-height:44px;display:inline-flex;align-items:center}
+.arrive-install-x{width:44px;height:44px}
+.app-shell .eta-tools .btn[data-action="refresh-eta"]{min-height:44px}
+.top-actions{gap:var(--space-2)}
+.footer-line+.footer-line{margin-top:var(--space-1)}
+.search-input{border-radius:var(--radius-md)}
+.search-input:focus{
+  border-color:var(--neon-cyan);
+  box-shadow:none;
+  outline:2px solid color-mix(in srgb, var(--neon-cyan) 55%, transparent);
+  outline-offset:2px;
+}
+.btn-primary{
+  color:var(--ink-primary);
+  background:var(--surface-2);
+  border-color:var(--line-strong);
+  box-shadow:none;
+}
+.star-btn.on,
+.star-btn.top.on{color:var(--pin);text-shadow:none}
+.alight-live{
+  margin:0 0 var(--space-3);
+  padding:var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  border-color:color-mix(in srgb, var(--neon-magenta) 45%, transparent);
+  background:var(--surface-card);
+  box-shadow:none;
+}
+.install-card,
+.sw-update,
+.app-shell .eta-tools{box-shadow:none}
+.eta-time:not(:has(.eta-mins-num)),
+.eta-mins:not(:has(.eta-mins-num)),
+.eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)),
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)),
+.lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)),
+.eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)){
+  color:var(--ink-muted);
+  font-size:0.92rem;
+  font-weight:600;
+  letter-spacing:0;
+}
+.eta-body.is-stale .eta-mins:not(:has(.eta-mins-num)),
+.eta-body.is-stale .eta-time:not(:has(.eta-mins-num)),
+.eta-body.is-stale .eta-next .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)),
+.eta-body.is-stale .eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)),
+.eta-body.is-stale .lrt-plat.is-fastest .eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)),
+.eta-body.is-stale .eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row) .eta-mins:not(:has(.eta-mins-num)){
+  color:var(--streetlight-ink);
+}
+.arm-lead.on,
+.arm-lead[aria-pressed="true"],
+.eta-arm.on{
+  color:var(--ink-primary);
+  background:var(--surface-2);
+  border-color:var(--line-strong);
+  box-shadow:none;
+}
+.btn:focus-visible,
+.mode-chip:focus-visible,
+.route-chip:focus-visible,
+.icon-btn:focus-visible,
+.stop-card:focus-visible,
+.list-route-chip:focus-visible{
+  outline:2px solid color-mix(in srgb, var(--neon-cyan) 70%, white);
+  outline-offset:2px;
+}
+@media (prefers-reduced-transparency:reduce){
+  body,
+  .heui-bin-splash{
+    background-color:var(--surface-0);
+    background-image:none;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .stop-card:active,
+  .btn:active,
+  .icon-btn:active,
+  .pin-unpin:active,
+  .route-pad-key:active,
+  .mode-chip:active{transform:none}
+}
