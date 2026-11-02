@@ -20,7 +20,40 @@ assert.ok(bundle.includes('saveRecent:t?!n.__composing&&recentExact(e):recentSho
 assert.ok(bundle.includes('if(e&&!e.__composing){let t=e.value.trim();t.length>=2&&rt(t)}'));
 assert.ok(bundle.includes('try{nt()}catch{}'));
 assert.ok(bundle.includes('var padTimer'));
-assert.ok(bundle.includes('window.clearTimeout(padTimer);padTimer=window.setTimeout(()=>{zt(e,t)},300)'));
+assert.ok(bundle.includes('window.clearTimeout(padTimer);padTimer=window.setTimeout(()=>{let n=P.querySelector(`#q`);if(n&&n.value!==e)return;zt(e,t)},300)'));
+assert.ok(bundle.includes('window.clearTimeout(r);window.clearTimeout(padTimer);let t=recentInputBlocked(n,e.isComposing)'));
+
+const dStart = bundle.indexOf('var padTimer;function $d(');
+const dEnd = bundle.indexOf('function zt(', dStart);
+assert.ok(dStart >= 0 && dEnd > dStart);
+const padField = { value: '', setSelectionRange() {} };
+const calls = [];
+const pending = [];
+const $d = new Function('P', 'window', 'zt', `${bundle.slice(dStart, dEnd)}; return $d;`)(
+  { querySelector: () => padField },
+  {
+    setTimeout(fn) {
+      const rec = { fn, on: true };
+      pending.push(rec);
+      return rec;
+    },
+    clearTimeout(rec) { if (rec) rec.on = false; },
+  },
+  (value) => calls.push(value),
+);
+function flushPad() {
+  const due = pending.splice(0, pending.length);
+  for (const rec of due) if (rec.on) rec.fn();
+}
+$d('9', { saveRecent: true });
+assert.strictEqual(padField.value, '9');
+padField.value = '9屯門';
+flushPad();
+assert.deepStrictEqual(calls, [], 'a keypad commit must not wipe a query typed after the tap');
+$d('260', { saveRecent: true });
+assert.strictEqual(padField.value, '260');
+flushPad();
+assert.deepStrictEqual(calls, ['260']);
 assert.ok(!bundle.includes('clearTimeout($t)'));
 
 const start = bundle.indexOf('/* RECENT_IME_BEGIN */');
