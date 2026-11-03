@@ -21,7 +21,7 @@ The site is static. The phone is the runtime: it calls the KMB and MTR open-data
 | Surge hostname | https://tap-eta-hk.surge.sh |
 | Custom domain on Surge Free | https://heuibin.codecoffee.online |
 
-Both hosts serve the revision in [`rev.txt`](rev.txt) (currently `v20261102a`). Each origin keeps its own favorites.
+Both hosts serve the revision in [`rev.txt`](rev.txt) (currently `v20261103a`). Each origin keeps its own favorites.
 
 `http://heuibin.codecoffee.online` still serves the same files. Install the PWA from the `https://` URL. Certificate status and the phone checklist are in [PRODUCTION.md](PRODUCTION.md).
 
@@ -120,7 +120,7 @@ Operator ETA responses are not stored by the worker (`NetworkOnly` on `data.etab
 | Path | Role |
 |---|---|
 | `index.html` | Shell, revision meta, service-worker registration, update banner |
-| `assets/index-<rev>.js`, `assets/index-<rev>.css` | App bundle for that revision. The current files are `assets/index-v20261102a.*` |
+| `assets/index-<rev>.js`, `assets/index-<rev>.css` | App bundle for that revision. The current files are `assets/index-v20261103a.*` |
 | `assets/eta-details.css`, `styles.css` | Detail layout and first-paint styles |
 | `sw.js`, `workbox-4a6fc131.js` | Workbox 7.4.0 service worker |
 | `registerSW.js` | Same banner logic; still part of the cache contract |

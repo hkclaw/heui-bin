@@ -62,6 +62,11 @@ const padAt = bt.lastIndexOf('${Lt()}');
 assert.ok(scrollAt > 0 && resultsAt > scrollAt && padAt > resultsAt, 'keypad must follow the scroll region');
 assert.ok(!bt.includes('<div id="recent-host">${Rt()}</div>\n      ${Lt()}'));
 assert.ok(bt.includes('s.appendChild(f)'));
+assert.ok(
+  bundle.includes('if(St===`ok`&&H().name===`search`&&P){let q=P.querySelector(`#q`);if(!q||!q.__composing&&q.value===(H().q||``))Bt(H().q)}'),
+  'a search opened before GPS must re-sort once the fix arrives',
+);
+assert.ok(bundle.includes('},120)});!z&&Dt()}function recentEmpty()'), 'search must start the GPS fix');
 
 for (const sheet of [css, shell]) {
   assert.ok(sheet.includes('.route-pad-zero .route-pad-spacer{flex:0 0 calc(33.3333% - 2.66667px)'));
