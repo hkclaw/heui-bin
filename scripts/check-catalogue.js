@@ -56,7 +56,7 @@ for (const stop of kmb) {
   assert.ok(Array.isArray(stop.routes) && stop.routes.length);
   for (const route of stop.routes) routes.add(route);
 }
-for (const route of ['11A', '17A', '75F', '76A', '253', '307D', '600X', 'B10', 'B11', 'N64P', 'N272', 'NB73']) {
+for (const route of ['11A', '17A', '75F', '76A', '253', '307D', '600X', 'B10', 'B10S', 'B11', 'N64P', 'N272', 'NB73']) {
   assert.ok(routes.has(route), route);
 }
 for (const route of ['63R', '907D', 'HK2', 'N73', 'N276', 'SP12']) {
@@ -73,5 +73,8 @@ assert.ok(bundle.includes('仲有 ${r} 班'));
 assert.ok(bundle.includes('exits.set(e.id,e.exits)'));
 assert.ok(bundle.includes('data-nav="${U(etaPath(type,e.id,t))}"'));
 assert.ok(bundle.includes('class="stop-card-hit"'));
+assert.ok(!bundle.includes('(t.name===`search`||t.name===`route`||t.name===`eta`)&&Yt()'));
+assert.ok(bundle.includes('if(t.name!==`eta`)return;if(I&&String(I.id)===String(t.id)'));
+assert.ok(bundle.includes('walkPaint();return}Yt()'));
 
 console.log(`catalogue ok (mtr ${mtr.length}, kmb routes ${routes.size})`);
