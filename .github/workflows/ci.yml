@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -20,7 +21,7 @@ jobs:
 
   deploy:
     needs: check
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,11 +31,16 @@ jobs:
       - name: Publish to Surge
         env:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
         run: |
           if [ -z "$SURGE_TOKEN" ]; then
-            echo "Add repository secret SURGE_TOKEN from: surge tokens add -m ci"
+            echo "Missing actions secret SURGE_TOKEN. Mint it from the existing Free account. Do not create a new Surge account."
             exit 1
           fi
+          if [ -z "$SURGE_LOGIN" ]; then
+            unset SURGE_LOGIN
+          fi
+          # No --force https. Do not publish the codecoffee.online apex.
           npx --yes surge ./ tap-eta-hk.surge.sh
           npx --yes surge ./ heuibin.codecoffee.online
       - name: Verify live revision
