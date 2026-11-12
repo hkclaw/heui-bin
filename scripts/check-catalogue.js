@@ -59,7 +59,7 @@ for (const stop of kmb) {
 for (const route of ['11A', '17A', '75F', '76A', '253', '307D', '600X', 'B10', 'B10S', 'B11', 'N64P', 'N272', 'NB73']) {
   assert.ok(routes.has(route), route);
 }
-for (const route of ['63R', '907D', 'HK2', 'N73', 'N276', 'SP12']) {
+for (const route of ['63R', '8A', '907D', 'HK2', 'N73', 'N276', 'SP12']) {
   assert.ok(!routes.has(route), route);
 }
 
