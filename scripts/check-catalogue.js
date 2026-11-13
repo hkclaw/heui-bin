@@ -62,6 +62,15 @@ for (const route of ['11A', '17A', '75F', '76A', '253', '307D', '600X', 'B10', '
 for (const route of ['63R', '8A', '907D', 'HK2', 'N73', 'N276', 'SP12']) {
   assert.ok(!routes.has(route), route);
 }
+const kmbById = new Map(kmb.map((stop) => [stop.id, stop]));
+assert.ok(!kmbById.get('9627881F2180C5AB').routes.includes('17'), '創紀之城 no longer lists route 17');
+assert.ok(!kmbById.has('255401DABB64289D'), 'the old 盧押道 pole is gone from the KMB feed');
+const luard = kmbById.get('D28CA51749C67A3D');
+assert.strictEqual(luard.name_tc, '盧押道');
+assert.ok(luard.routes.includes('914'));
+const hospital = kmbById.get('2BC21AC371639FC3');
+assert.strictEqual(hospital.name_tc, '啟德醫院');
+assert.ok(hospital.routes.includes('5R') && hospital.routes.includes('15A'));
 
 assert.ok(bundle.includes('case`lrt`:return t.length===1?me(t[0])'));
 assert.ok(bundle.includes('e.type===`lrt`)&&e.memberIds'));

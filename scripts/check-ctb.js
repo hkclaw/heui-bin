@@ -27,12 +27,26 @@ assert.deepStrictEqual(routes.SP2, {
 });
 const b13sStops = ['001034', '001036', '001038', '001628', '003939'];
 const sp2Stops = ['003874', '003692', '001559'];
+const sp12Stops = ['003874', '003939'];
 for (const stop of stops) {
   const hasB13s = stop.routes.includes('B13S');
   const hasSp2 = stop.routes.includes('SP2');
+  const hasSp12 = stop.routes.includes('SP12');
   assert.strictEqual(hasB13s, b13sStops.includes(stop.id), `${stop.id} B13S`);
   assert.strictEqual(hasSp2, sp2Stops.includes(stop.id), `${stop.id} SP2`);
+  assert.strictEqual(hasSp12, sp12Stops.includes(stop.id), `${stop.id} SP12`);
 }
+assert.deepStrictEqual(routes.SP12, {
+  o: '啟德體育園',
+  d: '皇崗口岸',
+  oe: 'Kai Tak Sports Park',
+  de: 'Huanggang Port',
+});
+const byId = new Map(stops.map((stop) => [stop.id, stop]));
+assert.ok(!byId.get('001176').routes.includes('2'));
+assert.ok(!byId.get('001251').routes.includes('2'));
+assert.ok(byId.get('001090').routes.includes('10'));
+assert.ok(byId.get('001090').routes.includes('5B'));
 const ids = new Set();
 for (const stop of stops) {
   assert.strictEqual(stop.type, 'ctb');
