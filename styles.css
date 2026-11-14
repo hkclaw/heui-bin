@@ -1317,3 +1317,86 @@ button,input{font-family:inherit}
   .route-pad-key:active,
   .mode-chip:active{transform:none}
 }
+
+/* stageshow: the next minute is the picture. Departures share one
+   surface and a hairline, so later minutes read as lines. A route
+   chip's fare stays faint beside the route number. Search focus is
+   one ring, and the empty search line does not push 最近去過 into
+   the keypad. Stale amber and ghost rows stay in force below. */
+.eta-next>.eta-list:not(.eta-skel){
+  gap:0;
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:var(--surface-inset);
+  overflow:hidden;
+}
+.eta-next>.eta-list:not(.eta-skel)>.eta-row,
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row,
+.lrt-plat .eta-list:not(.eta-skel)>.eta-row{
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.eta-next>.eta-list:not(.eta-skel)>.eta-row{
+  border-bottom:1px solid var(--line);
+}
+.eta-next>.eta-list:not(.eta-skel)>.eta-row:last-child{border-bottom:0}
+.eta-next>.eta-list:not(.eta-skel)>.eta-row:first-child:not(.eta-skel-row){
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  padding-top:var(--space-4);
+  padding-bottom:var(--space-4);
+}
+.eta-next>.eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row),
+.eta-dir-panel .eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row),
+.lrt-plat .eta-list:not(.eta-skel)>.eta-row.is-hi:not(.eta-skel-row){
+  background:var(--surface-2);
+}
+.eta-body:not(.is-stale) .eta-next .eta-list:not(.eta-skel)>.eta-row:not(:first-child):not(.is-hi) .eta-mins .eta-mins-num,
+.eta-body:not(.is-stale) .eta-dir-panel .eta-list:not(.eta-skel)>.eta-row:not(:first-child):not(.is-hi) .eta-mins .eta-mins-num,
+.eta-body:not(.is-stale) .lrt-plat .eta-list:not(.eta-skel)>.eta-row:not(:first-child):not(.is-hi) .eta-mins .eta-mins-num{
+  font-size:1.15rem;
+  font-weight:700;
+  letter-spacing:0;
+  color:var(--ink-secondary);
+}
+.fav-eta-preview li:not(:first-child) .fav-eta-mins,
+.fav-eta-preview li:not(:first-child) .eta-mins-num{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--ink-secondary);
+}
+.list-route-chip .fare{
+  margin-inline-start:8px;
+  color:var(--ink-faint);
+  font-weight:600;
+}
+.search-input:focus{
+  border-color:var(--line);
+  box-shadow:none;
+  outline:2px solid color-mix(in srgb, var(--neon-cyan) 70%, white);
+  outline-offset:2px;
+}
+#search-results:has(.search-stops)>.state{
+  padding:var(--space-2) var(--card-pad-x) var(--space-1);
+  gap:var(--space-1);
+  min-height:0;
+  text-align:left;
+  place-items:start;
+}
+.eta-body.is-stale .eta-time,
+.eta-body.is-stale .eta-mins,
+.eta-body.is-stale .eta-mins-num,
+.eta-body.is-stale .eta-next-soon{color:var(--streetlight-ink)}
+.eta-skel-row .eta-route,
+.eta-skel-row .eta-dest,
+.eta-skel-row .eta-time{color:transparent;background:#ffffff14;border-radius:6px}
+ul.eta-list.eta-skel>li.eta-row.eta-skel-row{
+  border-color:var(--line);
+  background:#ffffff0b;
+  box-shadow:none;
+}
